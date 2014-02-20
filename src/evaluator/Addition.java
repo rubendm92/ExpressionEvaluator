@@ -1,9 +1,6 @@
 package evaluator;
 
-import evaluator.operators.DoubleDoubleAddOperator;
-import evaluator.operators.DoubleIntegerAddOperator;
-import evaluator.operators.IntegerDoubleAddOperator;
-import evaluator.operators.IntegerIntegerAddOperator;
+import evaluator.operators.BinaryOperatorFactory;
 
 public class Addition extends BinaryOperation<Object>{
 
@@ -13,19 +10,6 @@ public class Addition extends BinaryOperation<Object>{
 
     @Override
     public Object evaluate() {
-        if (left.evaluate() instanceof Integer) {
-            if (right.evaluate() instanceof Integer) {
-                return new IntegerIntegerAddOperator(left.evaluate(), right.evaluate()).evaluate();
-            } else if (right.evaluate() instanceof Double) {
-                return new IntegerDoubleAddOperator(left.evaluate(), right.evaluate()).evaluate();
-            }
-        } else if (left.evaluate() instanceof Double) {
-            if (right.evaluate() instanceof Integer) {
-                return new DoubleIntegerAddOperator(left.evaluate(), right.evaluate()).evaluate();
-            } else if (right.evaluate() instanceof Double) {
-                return new DoubleDoubleAddOperator(left.evaluate(), right.evaluate()).evaluate();
-            }
-        }
-        return null;
+        return new BinaryOperatorFactory().getOperator(left.evaluate(), right.evaluate()).evaluate();
     }
 }
