@@ -10,6 +10,6 @@ public class Addition extends BinaryOperation<Object>{
 
     @Override
     public Object evaluate() {
-        return new BinaryOperatorFactory().getOperator(left.evaluate(), right.evaluate()).evaluate();
+        return BinaryOperatorFactory.getInstance().getOperator(left.evaluate(), right.evaluate()).evaluate();
     }
 }
