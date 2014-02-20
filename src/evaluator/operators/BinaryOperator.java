@@ -1,14 +1,6 @@
 package evaluator.operators;
 
-public abstract class BinaryOperator {
-    
-    protected Object left;
-    protected Object right;
+public interface BinaryOperator {
 
-    public BinaryOperator(Object left, Object right) {
-        this.left = left;
-        this.right = right;
-    }
-    
-    public abstract Object evaluate();
+    public abstract Object evaluate(Object left, Object right);
 }

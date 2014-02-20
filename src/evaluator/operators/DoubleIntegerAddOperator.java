@@ -1,13 +1,9 @@
 package evaluator.operators;
 
-public class DoubleIntegerAddOperator extends BinaryOperator{
-
-    public DoubleIntegerAddOperator(Object left, Object right) {
-        super(left, right);
-    }
+public class DoubleIntegerAddOperator implements BinaryOperator {
 
     @Override
-    public Object evaluate() {
+    public Object evaluate(Object left, Object right) {
         return (Double) left + (Integer) right;
     }
 }
