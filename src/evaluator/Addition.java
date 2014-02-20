@@ -8,6 +8,6 @@ public class Addition extends BinaryOperation<Object>{
 
     @Override
     protected String signature() {
-        return getSimpleName(left.evaluate()) + getSimpleName(right.evaluate()) + getClass().getSimpleName();
+        return getSimpleName(left.evaluate()) + getSimpleName(right.evaluate()) + "Add";
     }
 }

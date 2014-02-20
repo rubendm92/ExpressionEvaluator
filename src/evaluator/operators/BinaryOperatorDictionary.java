@@ -1,14 +1,9 @@
 package evaluator.operators;
 
-import evaluator.operators.addition.IntegerIntegerAddOperator;
-import evaluator.operators.addition.IntegerDoubleAddOperator;
-import evaluator.operators.addition.DoubleDoubleAddOperator;
-import evaluator.operators.addition.DoubleIntegerAddOperator;
-import evaluator.operators.multiplication.IntegerDoubleMultiplyOperator;
-import evaluator.operators.multiplication.IntegerIntegerMultiplyOperator;
-import evaluator.operators.multiplication.DoubleDoubleMultiplyOperator;
-import evaluator.operators.multiplication.DoubleIntegerMultiplyOperator;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BinaryOperatorDictionary {
     
@@ -21,22 +16,18 @@ public class BinaryOperatorDictionary {
     }
     
     private void addOperators() {
-        additionOperators();
-        multiplyOperators();
-    }
-
-    private void additionOperators() {
-        operators.put("IntegerIntegerAddition", new IntegerIntegerAddOperator());
-        operators.put("IntegerDoubleAddition", new IntegerDoubleAddOperator());
-        operators.put("DoubleIntegerAddition", new DoubleIntegerAddOperator());
-        operators.put("DoubleDoubleAddition", new DoubleDoubleAddOperator());
+        ArrayList<Class> classes = new BinaryOperatorLoader().loadClasses();
+        for (Class i : classes) {
+            try {
+                operators.put(getOperatorSignature(i), (BinaryOperator) i.newInstance());
+            } catch (InstantiationException | IllegalAccessException ex) {
+                Logger.getLogger(BinaryOperatorDictionary.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
-    private void multiplyOperators() {
-        operators.put("IntegerIntegerMultiplication", new IntegerIntegerMultiplyOperator());
-        operators.put("IntegerDoubleMultiplication", new IntegerDoubleMultiplyOperator());
-        operators.put("DoubleIntegerMultiplication", new DoubleIntegerMultiplyOperator());
-        operators.put("DoubleDoubleMultiplication", new DoubleDoubleMultiplyOperator());
+    private String getOperatorSignature(Class name) {
+        return name.getSimpleName().replace("Operator", "");
     }
     
     public static BinaryOperatorDictionary getInstance() {
