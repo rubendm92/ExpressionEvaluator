@@ -13,10 +13,22 @@ public class BinaryOperatorDictionary {
     }
     
     private void addOperators() {
+        additionOperators();
+        multiplyOperators();
+    }
+
+    private void additionOperators() {
         operators.put("IntegerIntegerAddition", new IntegerIntegerAddOperator());
         operators.put("IntegerDoubleAddition", new IntegerDoubleAddOperator());
         operators.put("DoubleIntegerAddition", new DoubleIntegerAddOperator());
         operators.put("DoubleDoubleAddition", new DoubleDoubleAddOperator());
+    }
+    
+    private void multiplyOperators() {
+        operators.put("IntegerIntegerMultiplication", new IntegerIntegerMultiplyOperator());
+        operators.put("IntegerDoubleMultiplication", new IntegerDoubleMultiplyOperator());
+        operators.put("DoubleIntegerMultiplication", new DoubleIntegerMultiplyOperator());
+        operators.put("DoubleDoubleMultiplication", new DoubleDoubleMultiplyOperator());
     }
     
     public static BinaryOperatorDictionary getInstance() {

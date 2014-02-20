@@ -1,8 +1,8 @@
 package evaluator;
 
-public class Addition extends BinaryOperation<Object>{
+public class Multiplication extends BinaryOperation<Object>{
 
-    public Addition(Expression left, Expression right) {
+    public Multiplication(Expression left, Expression right) {
         super(left, right);
     }
 

@@ -5,18 +5,26 @@ import org.junit.Test;
 import org.junit.Assert.*;
 
 public class EvaluatorTests {
-    
+
     @Test
     public void testConstant() {
         Assert.assertEquals(2, new Constant(2).evaluate());
         Assert.assertEquals(2.3, new Constant(2.3).evaluate());
     }
-    
+
     @Test
     public void testAddition() {
         Assert.assertEquals(4, new Addition(new Constant(2), new Constant(2)).evaluate());
         Assert.assertEquals(2.4, new Addition(new Constant(2), new Constant(0.4)).evaluate());
         Assert.assertEquals(1.3, new Addition(new Constant(0.3), new Constant(1)).evaluate());
         Assert.assertEquals(4.1, new Addition(new Constant(1.2), new Constant(2.9)).evaluate());
+    }
+
+    @Test
+    public void testMultiplication() {
+        Assert.assertEquals(4, new Multiplication(new Constant(2), new Constant(2)).evaluate());
+        Assert.assertEquals(3.6, (double) new Multiplication(new Constant(3), new Constant(1.2)).evaluate(), 0.01);
+        Assert.assertEquals(0.3, new Multiplication(new Constant(0.3), new Constant(1)).evaluate());
+        Assert.assertEquals(0.75, (double) new Multiplication(new Constant(1.5), new Constant(0.5)).evaluate(), 0.01);
     }
 }

@@ -18,4 +18,8 @@ public abstract class BinaryOperation<Type> implements Expression<Type>{
     }
 
     protected abstract String signature();
+
+    protected String getSimpleName(Object object) {
+        return object.getClass().getSimpleName();
+    }
 }
