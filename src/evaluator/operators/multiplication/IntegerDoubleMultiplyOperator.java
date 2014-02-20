@@ -1,4 +1,6 @@
-package evaluator.operators;
+package evaluator.operators.multiplication;
+
+import evaluator.operators.BinaryOperator;
 
 public class IntegerDoubleMultiplyOperator implements BinaryOperator {
 

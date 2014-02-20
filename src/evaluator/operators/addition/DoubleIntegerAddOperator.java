@@ -1,4 +1,6 @@
-package evaluator.operators;
+package evaluator.operators.addition;
+
+import evaluator.operators.BinaryOperator;
 
 public class DoubleIntegerAddOperator implements BinaryOperator {
 

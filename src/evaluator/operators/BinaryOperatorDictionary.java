@@ -1,5 +1,13 @@
 package evaluator.operators;
 
+import evaluator.operators.addition.IntegerIntegerAddOperator;
+import evaluator.operators.addition.IntegerDoubleAddOperator;
+import evaluator.operators.addition.DoubleDoubleAddOperator;
+import evaluator.operators.addition.DoubleIntegerAddOperator;
+import evaluator.operators.multiplication.IntegerDoubleMultiplyOperator;
+import evaluator.operators.multiplication.IntegerIntegerMultiplyOperator;
+import evaluator.operators.multiplication.DoubleDoubleMultiplyOperator;
+import evaluator.operators.multiplication.DoubleIntegerMultiplyOperator;
 import java.util.HashMap;
 
 public class BinaryOperatorDictionary {
