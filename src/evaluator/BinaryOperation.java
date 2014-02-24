@@ -17,7 +17,9 @@ public abstract class BinaryOperation<Type> implements Expression<Type>{
         return (Type) BinaryOperatorDictionary.getInstance().getOperator(signature()).evaluate(left.evaluate(), right.evaluate());
     }
 
-    protected abstract String signature();
+    protected String signature() {
+        return getSimpleName(left.evaluate()) + getSimpleName(right.evaluate()) + getClass().getSimpleName();
+    }
 
     protected String getSimpleName(Object object) {
         return object.getClass().getSimpleName();

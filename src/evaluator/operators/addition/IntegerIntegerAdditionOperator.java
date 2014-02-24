@@ -2,10 +2,10 @@ package evaluator.operators.addition;
 
 import evaluator.operators.BinaryOperator;
 
-public class DoubleIntegerAddOperator implements BinaryOperator {
+public class IntegerIntegerAdditionOperator implements BinaryOperator {
 
     @Override
     public Object evaluate(Object left, Object right) {
-        return (Double) left + (Integer) right;
+        return (Integer) left + (Integer) right;
     }
 }
