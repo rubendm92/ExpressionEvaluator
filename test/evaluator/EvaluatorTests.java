@@ -1,5 +1,9 @@
 package evaluator;
 
+import evaluator.operations.Subtraction;
+import evaluator.operations.Addition;
+import evaluator.operations.Division;
+import evaluator.operations.Multiplication;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.junit.Assert.*;
@@ -34,5 +38,12 @@ public class EvaluatorTests {
         Assert.assertEquals(0.3, new Multiplication(new Constant(0.3), new Constant(1)).evaluate());
         Assert.assertEquals(0.75, (double) new Multiplication(new Constant(1.5), new Constant(0.5)).evaluate(), 0.01);
     }
-
+    
+    @Test
+    public void testDivision() {
+        Assert.assertEquals(1, new Division(new Constant(2), new Constant(2)).evaluate());
+        Assert.assertEquals(2.5, (double) new Division(new Constant(3), new Constant(1.2)).evaluate(), 0.01);
+        Assert.assertEquals(0.3, new Division(new Constant(0.3), new Constant(1)).evaluate());
+        Assert.assertEquals(3.0, (double) new Division(new Constant(1.5), new Constant(0.5)).evaluate());
+    }
 }

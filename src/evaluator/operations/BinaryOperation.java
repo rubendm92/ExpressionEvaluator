@@ -1,5 +1,6 @@
-package evaluator;
+package evaluator.operations;
 
+import evaluator.Expression;
 import evaluator.operators.BinaryOperatorDictionary;
 
 public abstract class BinaryOperation<Type> implements Expression<Type>{

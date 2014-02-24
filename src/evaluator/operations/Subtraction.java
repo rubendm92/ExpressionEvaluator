@@ -1,4 +1,6 @@
-package evaluator;
+package evaluator.operations;
+
+import evaluator.Expression;
 
 public class Subtraction extends BinaryOperation<Object>{
 
