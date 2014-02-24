@@ -1,9 +1,9 @@
 package evaluator.operators;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.reflections.Reflections;
 
 public class BinaryOperatorDictionary {
     
@@ -12,22 +12,18 @@ public class BinaryOperatorDictionary {
     
     private BinaryOperatorDictionary() {
         operators = new HashMap<>();
-        addOperators();
+        initOperators();
     }
     
-    private void addOperators() {
-        ArrayList<Class> classes = new BinaryOperatorLoader().loadClasses();
-        for (Class i : classes) {
+    private void initOperators() {
+        Reflections reflections = new Reflections("evaluator.operators");
+        for (Class<? extends BinaryOperator> class1 : reflections.getSubTypesOf(BinaryOperator.class)) {
             try {
-                operators.put(getOperatorSignature(i), (BinaryOperator) i.newInstance());
+                operators.put(class1.getSimpleName(), class1.newInstance());
             } catch (InstantiationException | IllegalAccessException ex) {
                 Logger.getLogger(BinaryOperatorDictionary.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
-    
-    private String getOperatorSignature(Class name) {
-        return name.getSimpleName().replace("Operator", "");
     }
     
     public static BinaryOperatorDictionary getInstance() {

@@ -19,7 +19,7 @@ public abstract class BinaryOperation<Type> implements Expression<Type>{
     }
 
     protected String signature() {
-        return getSimpleName(left.evaluate()) + getSimpleName(right.evaluate()) + getClass().getSimpleName();
+        return getSimpleName(left.evaluate()) + getSimpleName(right.evaluate()) + getClass().getSimpleName() + "Operator";
     }
 
     protected String getSimpleName(Object object) {
