@@ -1,7 +1,7 @@
 package evaluator.operations;
 
 import evaluator.Expression;
-import evaluator.operators.BinaryOperatorDictionary;
+import evaluator.operators.BinaryOperatorFactory;
 
 public abstract class BinaryOperation<Type> implements Expression<Type>{
     
@@ -15,7 +15,7 @@ public abstract class BinaryOperation<Type> implements Expression<Type>{
     
     @Override
     public Type evaluate() {
-        return (Type) BinaryOperatorDictionary.getInstance().getOperator(signature()).evaluate(left.evaluate(), right.evaluate());
+        return (Type) BinaryOperatorFactory.getInstance().createOperator(getClass().getSimpleName(), signature()).evaluate(left.evaluate(), right.evaluate());
     }
 
     protected String signature() {
