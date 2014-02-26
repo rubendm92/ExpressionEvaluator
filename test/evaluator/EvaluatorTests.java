@@ -4,6 +4,7 @@ import evaluator.operations.Subtraction;
 import evaluator.operations.Addition;
 import evaluator.operations.Division;
 import evaluator.operations.Multiplication;
+import java.util.ArrayList;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.junit.Assert.*;
@@ -45,5 +46,17 @@ public class EvaluatorTests {
         Assert.assertEquals(2.5, (double) new Division(new Constant(3), new Constant(1.2)).evaluate(), 0.01);
         Assert.assertEquals(0.3, new Division(new Constant(0.3), new Constant(1)).evaluate());
         Assert.assertEquals(3.0, (double) new Division(new Constant(1.5), new Constant(0.5)).evaluate());
+    }
+    
+    @Test
+    public void testInvalidOperation() {
+        try {
+            new Addition(new Constant(new ArrayList<>()), new Constant(1));
+            Assert.fail("InvalidOperationException was not thrown.");
+        } catch (InvalidOperationException ex){
+            Assert.assertTrue(true);
+        } catch (Exception ex) {
+            Assert.fail("Type of exception was not the expected.");
+        }
     }
 }
