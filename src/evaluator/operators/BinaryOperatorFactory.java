@@ -1,8 +1,5 @@
 package evaluator.operators;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class BinaryOperatorFactory {
 
     private static final BinaryOperatorFactory INSTANCE = new BinaryOperatorFactory();
@@ -19,8 +16,7 @@ public class BinaryOperatorFactory {
         try {
             return (BinaryOperator) Class.forName(operator).newInstance();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(BinaryOperatorFactory.class.getName()).log(Level.SEVERE, null, ex);
+            throw new InvalidOperationException("No operator found for parameters");
         }
-        return null;
     }
 }

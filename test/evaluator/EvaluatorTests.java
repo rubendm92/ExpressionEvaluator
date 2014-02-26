@@ -1,5 +1,6 @@
 package evaluator;
 
+import evaluator.operators.InvalidOperationException;
 import evaluator.operations.Subtraction;
 import evaluator.operations.Addition;
 import evaluator.operations.Division;
@@ -51,7 +52,7 @@ public class EvaluatorTests {
     @Test
     public void testInvalidOperation() {
         try {
-            new Addition(new Constant(new ArrayList<>()), new Constant(1));
+            new Addition(new Constant(new ArrayList<>()), new Constant(1)).evaluate();
             Assert.fail("InvalidOperationException was not thrown.");
         } catch (InvalidOperationException ex){
             Assert.assertTrue(true);
