@@ -3,8 +3,8 @@ package evaluator.operations;
 import evaluator.Expression;
 import evaluator.operators.BinaryOperatorFactory;
 
-public abstract class BinaryOperation<Type> implements Expression<Type>{
-    
+public abstract class BinaryOperation<Type> implements Expression<Type> {
+
     protected Expression left;
     protected Expression right;
 
@@ -12,7 +12,7 @@ public abstract class BinaryOperation<Type> implements Expression<Type>{
         this.left = left;
         this.right = right;
     }
-    
+
     @Override
     public Type evaluate() {
         return (Type) BinaryOperatorFactory.getInstance().createOperator(getClass().getSimpleName(), signature()).evaluate(left.evaluate(), right.evaluate());

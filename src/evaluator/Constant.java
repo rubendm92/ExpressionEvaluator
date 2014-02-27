@@ -1,9 +1,7 @@
 package evaluator;
 
-import evaluator.Expression;
+public class Constant<Type> implements Expression<Type> {
 
-public class Constant<Type> implements Expression<Type>{
-    
     private final Type value;
 
     public Constant(Type value) {
