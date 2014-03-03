@@ -1,6 +1,7 @@
 package parser;
 
 import evaluator.Expression;
+import parser.Token;
 
 public interface ExpressionFactory {
     
