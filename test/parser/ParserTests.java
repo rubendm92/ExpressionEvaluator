@@ -22,4 +22,18 @@ public class ParserTests {
         verify(factory.build(symbol("+")));
         verify(factory.build(constant(2)));
     }
+    
+    @Test
+    public void testTwoOperandsExpression() {
+        ExpressionFactory factory = mock(ExpressionFactory.class);
+        Parser parser = new Parser(factory);
+        Token[] tokens = {
+            constant(1),
+            symbol("+"),
+            constant(2),
+            symbol("+"),
+            constant(2)
+        };
+        assertEquals(5, parser.parse(tokens).evaluate());
+    }
 }

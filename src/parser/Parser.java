@@ -4,7 +4,6 @@ import evaluator.Constant;
 import evaluator.Expression;
 import evaluator.operations.Addition;
 import java.util.Stack;
-import parser.Token;
 
 public class Parser {
 
