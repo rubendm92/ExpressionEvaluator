@@ -36,4 +36,18 @@ public class ParserTests {
         };
         assertEquals(5, parser.parse(tokens).evaluate());
     }
+    
+    @Test
+    public void testOperatorPrecedence() {
+        ExpressionFactory factory = mock(ExpressionFactory.class);
+        Parser parser = new Parser(factory);
+        Token[] tokens = {
+            constant(2),
+            symbol("+"),
+            constant(1),
+            symbol("*"),
+            constant(2)
+        };
+        assertEquals(4, parser.parse(tokens).evaluate());
+    }
 }
