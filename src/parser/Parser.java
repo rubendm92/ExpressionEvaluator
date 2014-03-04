@@ -3,6 +3,7 @@ package parser;
 import evaluator.Constant;
 import evaluator.Expression;
 import evaluator.operations.Addition;
+import evaluator.operations.Multiplication;
 import java.util.Stack;
 
 public class Parser {
@@ -20,8 +21,8 @@ public class Parser {
     public Expression parse(Token[] tokens) {
         for (Token token : tokens)
             parse(token);
-        for (Token.Symbol symbol : symbols)
-            process(symbol);
+        while (!symbols.isEmpty())
+            process(symbols.pop());
         return expressions.pop();
     }
 
@@ -29,6 +30,8 @@ public class Parser {
         if (token instanceof Token.Constant) {
             expressions.push(new Constant(getValue((Token.Constant) token)));
         } else if (token instanceof Token.Symbol) {
+            if (newSymbolHasLessPrecedenceThanTop((Token.Symbol)token))
+                process(symbols.pop());
             symbols.push((Token.Symbol)token);
         }
     }
@@ -38,10 +41,17 @@ public class Parser {
         Expression left = expressions.pop();
         if (symbol.equals("+")) {
             expressions.push(new Addition(left, right));
+        } else if (symbol.equals("*")) {
+            expressions.push(new Multiplication(left, right));
         }
     }
 
     private Object getValue(Token.Constant constant) {
         return constant.value();
+    }
+
+    private boolean newSymbolHasLessPrecedenceThanTop(Token.Symbol symbol) {
+        if (symbols.isEmpty()) return false;
+        return (symbols.get(symbols.size() - 1).equals("*") && symbol.equals("+"));
     }
 }

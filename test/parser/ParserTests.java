@@ -43,9 +43,9 @@ public class ParserTests {
         Parser parser = new Parser(factory);
         Token[] tokens = {
             constant(2),
-            symbol("+"),
-            constant(1),
             symbol("*"),
+            constant(1),
+            symbol("+"),
             constant(2)
         };
         assertEquals(4, parser.parse(tokens).evaluate());
