@@ -9,7 +9,7 @@ public abstract class Token {
     public static <Type>Symbol symbol(Type token) {
         return new Symbol(token);
     }
-    
+
     public static class Constant<Type> extends Token {
         private final Type value;
 
@@ -20,7 +20,6 @@ public abstract class Token {
         public Object value() {
             return value;
         }
-
     }
 
     public static class Symbol<Type> extends Token {
@@ -28,12 +27,6 @@ public abstract class Token {
 
         private Symbol(Type token) {
             this.token = token;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (obj == null) return false;
-            return token.equals(obj);
         }
     }
 }

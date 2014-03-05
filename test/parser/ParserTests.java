@@ -1,6 +1,7 @@
 package parser;
 
 import evaluator.Expression;
+import java.util.Stack;
 import org.junit.Test;
 import static parser.Token.*;
 import static org.junit.Assert.*;
@@ -11,22 +12,23 @@ public class ParserTests {
     @Test
     public void testSimpleExpression() {
         ExpressionFactory factory = mock(ExpressionFactory.class);
-        Parser parser = new Parser(factory);
+        when(factory.getExpressionStack()).thenReturn(new Stack<Expression>());
         Token[] tokens = {
             constant(1),
             symbol("+"),
             constant(2)
         };
-        Expression expression = parser.parse(tokens);
-        verify(factory.build(constant(1)));
-        verify(factory.build(symbol("+")));
-        verify(factory.build(constant(2)));
+        Expression expression = new Parser(factory).parse(tokens);
+        verify(factory).getExpressionStack();
+        verify(factory).build(tokens[0]);
+        verify(factory).build(tokens[2]);
+        verify(factory).build(tokens[1]);
     }
     
     @Test
     public void testTwoOperandsExpression() {
         ExpressionFactory factory = mock(ExpressionFactory.class);
-        Parser parser = new Parser(factory);
+        Parser parser = new Parser(new ExpressionFactoryImpl());
         Token[] tokens = {
             constant(1),
             symbol("+"),

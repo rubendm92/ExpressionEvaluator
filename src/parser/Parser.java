@@ -1,9 +1,6 @@
 package parser;
 
-import evaluator.Constant;
 import evaluator.Expression;
-import evaluator.operations.Addition;
-import evaluator.operations.Multiplication;
 import java.util.Stack;
 
 public class Parser {
@@ -14,7 +11,7 @@ public class Parser {
 
     public Parser(ExpressionFactory factory) {
         this.symbols = new Stack<>();
-        this.expressions = new Stack<>();
+        this.expressions = factory.getExpressionStack();
         this.factory = factory;
     }
 
@@ -27,27 +24,24 @@ public class Parser {
     }
 
     private void parse(Token token) {
-        if (token instanceof Token.Constant) {
-            expressions.push(new Constant(getValue((Token.Constant) token)));
-        } else if (token instanceof Token.Symbol) {
-            if (newSymbolHasLessPrecedenceThanTop((Token.Symbol)token))
-                process(symbols.pop());
-            symbols.push((Token.Symbol)token);
-        }
-    }
-    
-    private void process(Token.Symbol symbol) {
-        Expression right = expressions.pop();
-        Expression left = expressions.pop();
-        if (symbol.equals("+")) {
-            expressions.push(new Addition(left, right));
-        } else if (symbol.equals("*")) {
-            expressions.push(new Multiplication(left, right));
-        }
+        if (token instanceof Token.Constant)
+            parseConstant((Token.Constant) token);
+        else if (token instanceof Token.Symbol)
+            parseSymbol((Token.Symbol) token);
     }
 
-    private Object getValue(Token.Constant constant) {
-        return constant.value();
+    private void parseConstant(Token.Constant constant) {
+        expressions.push(factory.build(constant));
+    }
+
+    private void parseSymbol(Token.Symbol symbol) {
+        if (newSymbolHasLessPrecedenceThanTop(symbol))
+            expressions.push(factory.build(symbols.pop()));
+        symbols.push(symbol);
+    }
+    
+    private void process(Token token) {
+        expressions.push(factory.build(token));
     }
 
     private boolean newSymbolHasLessPrecedenceThanTop(Token.Symbol symbol) {
