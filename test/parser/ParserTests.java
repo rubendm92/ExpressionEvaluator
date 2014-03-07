@@ -27,7 +27,6 @@ public class ParserTests {
     
     @Test
     public void testTwoOperandsExpression() {
-        ExpressionFactory factory = mock(ExpressionFactory.class);
         Parser parser = new Parser(new ExpressionFactoryImpl());
         Token[] tokens = {
             constant(1),
@@ -41,8 +40,7 @@ public class ParserTests {
     
     @Test
     public void testOperatorPrecedence() {
-        ExpressionFactory factory = mock(ExpressionFactory.class);
-        Parser parser = new Parser(factory);
+        Parser parser = new Parser(new ExpressionFactoryImpl());
         Token[] tokens = {
             constant(2),
             symbol("*"),

@@ -6,7 +6,7 @@ public abstract class Token {
         return new Constant(value);
     }
     
-    public static <Type>Symbol symbol(Type token) {
+    public static Symbol symbol(String token) {
         return new Symbol(token);
     }
 
@@ -22,11 +22,15 @@ public abstract class Token {
         }
     }
 
-    public static class Symbol<Type> extends Token {
-        private final Type token;
+    public static class Symbol extends Token {
+        private final String symbol;
 
-        private Symbol(Type token) {
-            this.token = token;
+        private Symbol(String symbol) {
+            this.symbol = symbol;
+        }
+        
+        public String symbol() {
+            return symbol;
         }
     }
 }

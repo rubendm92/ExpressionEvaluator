@@ -3,6 +3,7 @@ package parser;
 import evaluator.Constant;
 import evaluator.Expression;
 import evaluator.operations.Addition;
+import evaluator.operations.Multiplication;
 import java.util.Stack;
 
 public class ExpressionFactoryImpl implements ExpressionFactory{
@@ -16,18 +17,21 @@ public class ExpressionFactoryImpl implements ExpressionFactory{
     @Override
     public Expression build(Token token) {
         if (token instanceof Token.Constant)
-            return buildConstant(token);
-        return buildOperation();
+            return buildConstant((Token.Constant) token);
+        return buildOperation((Token.Symbol) token);
     }
 
-    private Constant buildConstant(Token token) {
-        return new Constant(((Token.Constant) token).value());
+    private Constant buildConstant(Token.Constant token) {
+        return new Constant((token).value());
     }
     
-    private Expression buildOperation() {
+    private Expression buildOperation(Token.Symbol symbol) {
         Expression right = expressions.pop();
         Expression left = expressions.pop();
-        return new Addition(left, right);
+        if (symbol.symbol().equals("+"))
+            return new Addition(left, right);
+        else
+            return new Multiplication(left, right);
     }
 
     @Override

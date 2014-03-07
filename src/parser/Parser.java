@@ -35,7 +35,7 @@ public class Parser {
     }
 
     private void parseSymbol(Token.Symbol symbol) {
-        if (newSymbolHasLessPrecedenceThanTop(symbol))
+        if (newSymbolHasLessPrecedenceThanTop(symbol.symbol()))
             expressions.push(factory.build(symbols.pop()));
         symbols.push(symbol);
     }
@@ -44,8 +44,8 @@ public class Parser {
         expressions.push(factory.build(token));
     }
 
-    private boolean newSymbolHasLessPrecedenceThanTop(Token.Symbol symbol) {
+    private boolean newSymbolHasLessPrecedenceThanTop(String symbol) {
         if (symbols.isEmpty()) return false;
-        return (symbols.get(symbols.size() - 1).equals("*") && symbol.equals("+"));
+        return (symbols.get(symbols.size() - 1).symbol().equals("*") && symbol.equals("+"));
     }
 }
