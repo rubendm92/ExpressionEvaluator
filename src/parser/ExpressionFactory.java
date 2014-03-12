@@ -7,11 +7,11 @@ import java.util.Stack;
 public class ExpressionFactory {
 
     private final Stack<Expression> expressions;
-    private final OperationFactory operations;
+    private final OperationFactory operationFactory;
 
     public ExpressionFactory() {
         this.expressions = new Stack<>();
-        this.operations = new OperationFactory();
+        this.operationFactory = new OperationFactory();
     }
     
     public Expression build(Token token) {
@@ -27,7 +27,7 @@ public class ExpressionFactory {
     private Expression buildOperation(Token.Symbol symbol) {
         Expression right = expressions.pop();
         Expression left = expressions.pop();
-        return operations.buildOperation(symbol.symbol(), left, right);
+        return operationFactory.buildOperation(symbol.symbol(), left, right);
     }
 
     public Stack<Expression> getExpressionStack() {
