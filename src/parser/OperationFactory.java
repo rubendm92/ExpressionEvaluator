@@ -1,10 +1,10 @@
 package parser;
 
 import evaluator.Expression;
-import evaluator.operations.Addition;
-import evaluator.operations.Division;
-import evaluator.operations.Multiplication;
-import evaluator.operations.Subtraction;
+import evaluator.operations.binary.Addition;
+import evaluator.operations.binary.Division;
+import evaluator.operations.binary.Multiplication;
+import evaluator.operations.binary.Subtraction;
 import java.util.HashMap;
 
 public class OperationFactory {
