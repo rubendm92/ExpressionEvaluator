@@ -35,4 +35,17 @@ public class ParserTests {
         };
         assertEquals(5, parser.parse(tokens).evaluate());
     }
+    
+    @Test
+    public void testTwoOperandsExpressionWithPrecedence() {
+        ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
+        Token[] tokens = {
+            constant(2),
+            symbol("+"),
+            constant(2),
+            symbol("*"),
+            constant(2)
+        };
+        assertEquals(6, parser.parse(tokens).evaluate());
+    }
 }
