@@ -4,7 +4,7 @@ import evaluator.Expression;
 import evaluator.operations.binary.Addition;
 import evaluator.operations.binary.Division;
 import evaluator.operations.binary.Multiplication;
-import evaluator.operations.unary.Minus;
+import evaluator.operations.binary.Subtraction;
 import java.util.HashMap;
 
 public class OperationFactory {
@@ -27,7 +27,7 @@ public class OperationFactory {
 
             @Override
             public Expression build(Expression left, Expression right) {
-                return new Addition(left, new Minus(right));
+                return new Subtraction(left, right);
             }
         });
         builders.put("*", new Builder() {
