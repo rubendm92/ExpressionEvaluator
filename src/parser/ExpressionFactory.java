@@ -25,9 +25,7 @@ public class ExpressionFactory {
     }
     
     private Expression buildOperation(Token.Symbol symbol) {
-        Expression right = expressions.pop();
-        Expression left = expressions.pop();
-        return operationFactory.buildOperation(symbol.symbol(), left, right);
+        return operationFactory.buildOperation(symbol.symbol(), expressions.remove(0), expressions.remove(0));
     }
 
     public Stack<Expression> getExpressionStack() {

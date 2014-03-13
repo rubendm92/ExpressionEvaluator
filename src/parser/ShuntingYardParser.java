@@ -32,21 +32,22 @@ public class ShuntingYardParser implements Parser {
     }
 
     private void parseSymbol(Token.Symbol symbol) {
-        if (topSymbolHasMorePrecedenceThanNew(symbol))
-            strategy.build(symbols.pop());
-        symbols.push(symbol);
+        if (topSymbolHasLessPrecedenceThanNew(symbol))
+            strategy.build(symbol);
+        else symbols.push(symbol);
     }
     
     private Expression getExpression() {
-        while(!symbols.isEmpty())
-            strategy.build(symbols.pop());
+        for (Token.Symbol symbol : symbols) {
+            strategy.build(symbol);
+        }
         return strategy.getExpression();
     }
 
-    private boolean topSymbolHasMorePrecedenceThanNew(Token.Symbol symbol) {
+    private boolean topSymbolHasLessPrecedenceThanNew(Token.Symbol symbol) {
         if (symbols.isEmpty()) return false;
-        if (symbol.symbol().equals("+") || symbol.symbol().equals("-")) {
-            return (symbols.get(symbols.size() - 1).symbol().equals("*")) || (symbols.get(symbols.size() - 1).symbol().equals("/"));
+        if (symbol.symbol().equals("*") || symbol.symbol().equals("/")) {
+            return (symbols.get(symbols.size() - 1).symbol().equals("+")) || (symbols.get(symbols.size() - 1).symbol().equals("-"));
         }
         return false;
     }

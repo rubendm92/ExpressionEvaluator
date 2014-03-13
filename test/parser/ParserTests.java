@@ -50,15 +50,15 @@ public class ParserTests {
     }
     
     @Test
-    public void testAdditionAndSubstraction() {
+    public void testAdditionAndSubtraction() {
         ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
         Token[] tokens = {
-            constant(2),
+            constant(3),
             symbol("-"),
             constant(1),
             symbol("+"),
             constant(2)
         };
-        assertEquals(3, parser.parse(tokens).evaluate());
+        assertEquals(4, parser.parse(tokens).evaluate());
     }
 }
