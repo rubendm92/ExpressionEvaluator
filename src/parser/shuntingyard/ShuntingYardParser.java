@@ -1,10 +1,12 @@
-package parser;
+package parser.shuntingyard;
 
 import parser.token.Token;
 import parser.token.Symbol;
 import parser.token.Constant;
 import evaluator.Expression;
 import java.util.Stack;
+import parser.Parser;
+import parser.ParserTreeBuildingStrategy;
 import parser.token.Operator;
 import parser.token.Parenthesis;
 
@@ -49,19 +51,23 @@ public class ShuntingYardParser implements Parser {
         if (parenthesis == Parenthesis.OPEN)
             symbols.push(parenthesis);
         else if (parenthesis == Parenthesis.CLOSE) {
-            while (true) {
-                Symbol symbol = symbols.pop();
-                if (symbol == Parenthesis.OPEN) break;
-                strategy.build(symbol);
-            }
+            buildContentInsideParenthesis();
+        }
+    }
+
+    private void buildContentInsideParenthesis() {
+        while (true) {
+            Symbol symbol = symbols.pop();
+            if (symbol == Parenthesis.OPEN) return;
+            strategy.build(symbol);
         }
     }
     
     private void parseOperator(Operator operator) {
-        if (topSymbolHasLessPrecedenceThanNew(operator))
+        if (compareNewSymbolWithTop(operator) > 0)
             strategy.build(operator);
         else {
-            if (equal(operator)) strategy.build(symbols.pop());
+            if (compareNewSymbolWithTop(operator) == 0) strategy.build(symbols.pop());
             symbols.push(operator);
         }
     }
@@ -69,27 +75,23 @@ public class ShuntingYardParser implements Parser {
     private Expression getExpression() {
         while (!symbols.empty()) {
             Symbol symbol = symbols.pop();
-            if (symbol instanceof Parenthesis) {
-                continue;
-            }
+            if (symbol instanceof Parenthesis) continue;
             strategy.build(symbol);
         }
         return strategy.getExpression();
     }
 
-    private boolean topSymbolHasLessPrecedenceThanNew(Symbol symbol) {
-        if (symbols.isEmpty()) return false;
-        if (symbols.get(symbols.size() - 1) == Parenthesis.OPEN) return false;
-        Operator op = (Operator) symbol;
-        Operator op1 = (Operator) symbols.get(symbols.size() - 1);
-        return op.hasMorePrecedence(op1);
+    private int compareNewSymbolWithTop(Symbol symbol) {
+        if (symbols.isEmpty()) return -1;
+        if (topSymbol() == Parenthesis.OPEN) return -1;
+        return operator(symbol).compareTo(operator(topSymbol()));
     }
     
-    private boolean equal(Symbol symbol) {
-        if (symbols.isEmpty()) return false;
-        if (symbols.get(symbols.size() - 1) == Parenthesis.OPEN) return false;
-        Operator op = (Operator) symbol;
-        Operator op1 = (Operator) symbols.get(symbols.size() - 1);
-        return op.hasEqualPrecedence(op1);
+    private Symbol topSymbol() {
+        return symbols.get(symbols.size() - 1);
+    }
+    
+    private Operator operator(Symbol symbol) {
+        return (Operator) symbol;
     }
 }
