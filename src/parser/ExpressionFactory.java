@@ -48,8 +48,8 @@ public class ExpressionFactory {
         });
     }
     
-    public Constant buildConstant(Token.Constant token) {
-        return new Constant((token).value());
+    public Constant buildConstant(parser.Constant token) {
+        return new Constant(token.value());
     }
     
     public Expression buildOperation(String operator, Expression left, Expression right) {

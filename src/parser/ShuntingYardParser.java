@@ -6,7 +6,7 @@ import java.util.Stack;
 public class ShuntingYardParser implements Parser {
     
     private final ParserTreeBuildingStrategy strategy;
-    private final Stack<Token.Symbol> symbols;
+    private final Stack<Symbol> symbols;
 
     public ShuntingYardParser(ParserTreeBuildingStrategy strategy) {
         this.strategy = strategy;
@@ -21,30 +21,30 @@ public class ShuntingYardParser implements Parser {
     }
     
     private void parse(Token token) {
-        if (token instanceof Token.Constant)
-            parseConstant((Token.Constant) token);
-        else if (token instanceof Token.Symbol)
-            parseSymbol((Token.Symbol) token);
+        if (token instanceof Constant)
+            parseConstant((Constant) token);
+        else if (token instanceof Symbol)
+            parseSymbol((Symbol) token);
     }
     
-    private void parseConstant(Token.Constant constant) {
+    private void parseConstant(Constant constant) {
         strategy.build(constant);
     }
 
-    private void parseSymbol(Token.Symbol symbol) {
+    private void parseSymbol(Symbol symbol) {
         if (topSymbolHasLessPrecedenceThanNew(symbol))
             strategy.build(symbol);
         else symbols.push(symbol);
     }
     
     private Expression getExpression() {
-        for (Token.Symbol symbol : symbols)
+        for (Symbol symbol : symbols)
             strategy.build(symbol);
         return strategy.getExpression();
     }
 
-    private boolean topSymbolHasLessPrecedenceThanNew(Token.Symbol symbol) {
+    private boolean topSymbolHasLessPrecedenceThanNew(Symbol symbol) {
         if (symbols.isEmpty()) return false;
-        return symbols.get(symbols.size() - 1).compareTo(symbol) > 0;
+        return symbol.hasMorePrecedence(symbols.get(symbols.size() - 1));
     }
 }

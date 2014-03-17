@@ -2,7 +2,6 @@ package parser;
 
 import evaluator.Expression;
 import org.junit.Test;
-import static parser.Token.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -12,9 +11,9 @@ public class ParserTests {
     public void testStrategyStub() {
         ParserTreeBuildingStrategy strategy = mock(ParserTreeBuildingStrategy.class);
         Token[] tokens = {
-            constant(1),
-            symbol("+", 0),
-            constant(2)
+            new Constant(1),
+            Symbol.ADD,
+            new Constant(2)
         };
         Expression expression = new ShuntingYardParser(strategy).parse(tokens);
         verify(strategy).build(tokens[0]);
@@ -27,11 +26,11 @@ public class ParserTests {
     public void testTwoOperandsExpression() {
         ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
         Token[] tokens = {
-            constant(1),
-            symbol("+", 0),
-            constant(2),
-            symbol("+", 0),
-            constant(2)
+            new Constant(1),
+            Symbol.ADD,
+            new Constant(2),
+            Symbol.ADD,
+            new Constant(2)
         };
         assertEquals(5, parser.parse(tokens).evaluate());
     }
@@ -40,11 +39,11 @@ public class ParserTests {
     public void testTwoOperandsExpressionWithPrecedence() {
         ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
         Token[] tokens = {
-            constant(2),
-            symbol("+", 0),
-            constant(2),
-            symbol("+", 1),
-            constant(2)
+            new Constant(2),
+            Symbol.ADD,
+            new Constant(2),
+            Symbol.MULTIPLY,
+            new Constant(2)
         };
         assertEquals(6, parser.parse(tokens).evaluate());
     }
@@ -53,11 +52,11 @@ public class ParserTests {
     public void testAdditionAndSubtraction() {
         ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
         Token[] tokens = {
-            constant(3),
-            symbol("-", 0),
-            constant(1),
-            symbol("+", 0),
-            constant(2)
+            new Constant(3),
+            Symbol.SUBTRACT,
+            new Constant(1),
+            Symbol.ADD,
+            new Constant(2)
         };
         assertEquals(4, parser.parse(tokens).evaluate());
     }
