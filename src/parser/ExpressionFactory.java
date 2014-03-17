@@ -2,33 +2,61 @@ package parser;
 
 import evaluator.Constant;
 import evaluator.Expression;
-import java.util.Stack;
+import evaluator.operations.binary.Addition;
+import evaluator.operations.binary.Division;
+import evaluator.operations.binary.Multiplication;
+import evaluator.operations.binary.Subtraction;
+import java.util.HashMap;
 
 public class ExpressionFactory {
 
-    private final Stack<Expression> expressions;
-    private final OperationFactory operationFactory;
-
+    private final HashMap<String, Builder> builders;
+    
     public ExpressionFactory() {
-        this.expressions = new Stack<>();
-        this.operationFactory = new OperationFactory();
+        this.builders = new HashMap<>();
+        addOperators();
     }
     
-    public Expression build(Token token) {
-        if (token instanceof Token.Constant)
-            return buildConstant((Token.Constant) token);
-        return buildOperation((Token.Symbol) token);
-    }
+    private void addOperators() {
+        builders.put("+", new Builder() {
 
-    private Constant buildConstant(Token.Constant token) {
+            @Override
+            public Expression build(Expression left, Expression right) {
+                return new Addition(left, right);
+            }
+        });
+        builders.put("-", new Builder() {
+
+            @Override
+            public Expression build(Expression left, Expression right) {
+                return new Subtraction(left, right);
+            }
+        });
+        builders.put("*", new Builder() {
+
+            @Override
+            public Expression build(Expression left, Expression right) {
+                return new Multiplication(left, right);
+            }
+        });
+        builders.put("/", new Builder() {
+
+            @Override
+            public Expression build(Expression left, Expression right) {
+                return new Division(left, right);
+            }
+        });
+    }
+    
+    public Constant buildConstant(Token.Constant token) {
         return new Constant((token).value());
     }
     
-    private Expression buildOperation(Token.Symbol symbol) {
-        return operationFactory.buildOperation(symbol.symbol(), expressions.remove(0), expressions.remove(0));
+    public Expression buildOperation(String operator, Expression left, Expression right) {
+        return builders.get(operator).build(left, right);
     }
 
-    public Stack<Expression> getExpressionStack() {
-        return expressions;
+    private interface Builder {
+        public Expression build(Expression left, Expression right);
     }
 }

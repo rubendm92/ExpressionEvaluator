@@ -1,21 +1,33 @@
 package parser;
 
+import evaluator.Constant;
 import evaluator.Expression;
 import java.util.Stack;
 
 public class SimpleParserTreeBuildingStrategy implements ParserTreeBuildingStrategy {
 
-    private final ExpressionFactory factory;
     private final Stack<Expression> expressions;
+    private final ExpressionFactory factory;
 
     public SimpleParserTreeBuildingStrategy() {
+        this.expressions = new Stack<>();
         this.factory = new ExpressionFactory();
-        this.expressions = factory.getExpressionStack();
     }
 
     @Override
     public void build(Token token) {
-        expressions.add(factory.build(token));
+        if (token instanceof Token.Constant)
+            expressions.add(buildConstant((Token.Constant) token));
+        else
+            expressions.add(buildOperation((Token.Symbol) token));
+    }
+    
+    private Constant buildConstant(Token.Constant token) {
+        return factory.buildConstant(token);
+    }
+    
+    private Expression buildOperation(Token.Symbol symbol) {
+        return factory.buildOperation(symbol.symbol(), expressions.remove(0), expressions.remove(0));
     }
 
     @Override

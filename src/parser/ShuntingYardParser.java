@@ -38,17 +38,15 @@ public class ShuntingYardParser implements Parser {
     }
     
     private Expression getExpression() {
-        for (Token.Symbol symbol : symbols) {
+        for (Token.Symbol symbol : symbols)
             strategy.build(symbol);
-        }
         return strategy.getExpression();
     }
 
     private boolean topSymbolHasLessPrecedenceThanNew(Token.Symbol symbol) {
         if (symbols.isEmpty()) return false;
-        if (symbol.symbol().equals("*") || symbol.symbol().equals("/")) {
+        if (symbol.symbol().equals("*") || symbol.symbol().equals("/"))
             return (symbols.get(symbols.size() - 1).symbol().equals("+")) || (symbols.get(symbols.size() - 1).symbol().equals("-"));
-        }
         return false;
     }
 }
