@@ -8,6 +8,8 @@ import evaluator.operations.binary.Division;
 import evaluator.operations.binary.Multiplication;
 import evaluator.operations.binary.Subtraction;
 import java.util.HashMap;
+import parser.token.Operator;
+import parser.token.Parenthesis;
 
 public class ExpressionFactory {
 
@@ -19,32 +21,46 @@ public class ExpressionFactory {
     }
     
     private void addOperators() {
-        builders.put(Symbol.ADD, new Builder() {
+        builders.put(Operator.ADD, new Builder() {
 
             @Override
             public Expression build(Expression left, Expression right) {
                 return new Addition(left, right);
             }
         });
-        builders.put(Symbol.SUBTRACT, new Builder() {
+        builders.put(Operator.SUBTRACT, new Builder() {
 
             @Override
             public Expression build(Expression left, Expression right) {
                 return new Subtraction(left, right);
             }
         });
-        builders.put(Symbol.MULTIPLY, new Builder() {
+        builders.put(Operator.MULTIPLY, new Builder() {
 
             @Override
             public Expression build(Expression left, Expression right) {
                 return new Multiplication(left, right);
             }
         });
-        builders.put(Symbol.DIVIDE, new Builder() {
+        builders.put(Operator.DIVIDE, new Builder() {
 
             @Override
             public Expression build(Expression left, Expression right) {
                 return new Division(left, right);
+            }
+        });
+        builders.put(Parenthesis.OPEN, new Builder() {
+
+            @Override
+            public Expression build(Expression left, Expression right) {
+                throw new RuntimeException("Parentesis abierto");
+            }
+        });
+        builders.put(Parenthesis.CLOSE, new Builder() {
+
+            @Override
+            public Expression build(Expression left, Expression right) {
+                throw new RuntimeException("Parentesis cerrado");
             }
         });
     }

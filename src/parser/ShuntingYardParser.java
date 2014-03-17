@@ -5,6 +5,8 @@ import parser.token.Symbol;
 import parser.token.Constant;
 import evaluator.Expression;
 import java.util.Stack;
+import parser.token.Operator;
+import parser.token.Parenthesis;
 
 public class ShuntingYardParser implements Parser {
     
@@ -35,19 +37,41 @@ public class ShuntingYardParser implements Parser {
     }
 
     private void parseSymbol(Symbol symbol) {
-        if (topSymbolHasLessPrecedenceThanNew(symbol))
+        if (symbol == Parenthesis.OPEN) {
+            symbols.push(symbol);
+            return;
+        }
+        if (symbol == Parenthesis.CLOSE) {
+            while (true) {
+                Symbol s = symbols.pop();
+                if (s == Parenthesis.OPEN) break;
+                strategy.build(s);
+            }
+            return;
+        }
+        if (topSymbolHasLessPrecedenceThanNew(symbol)) {
             strategy.build(symbol);
-        else symbols.push(symbol);
+        }
+        else {
+            symbols.push(symbol);
+        }
     }
     
     private Expression getExpression() {
-        for (Symbol symbol : symbols)
+        for (Symbol symbol : symbols) {
+            if (symbol instanceof Parenthesis) continue;
             strategy.build(symbol);
+        }
         return strategy.getExpression();
     }
 
     private boolean topSymbolHasLessPrecedenceThanNew(Symbol symbol) {
         if (symbols.isEmpty()) return false;
-        return symbol.hasMorePrecedence(symbols.get(symbols.size() - 1));
+        if (symbols.get(symbols.size() - 1) == Parenthesis.OPEN) return false;
+        if (symbols.get(symbols.size() - 1) == Parenthesis.CLOSE) return false;
+        if (symbol == Parenthesis.CLOSE) return false;
+        Operator op = (Operator) symbol;
+        Operator op1 = (Operator) symbols.get(symbols.size() - 1);
+        return op.hasMorePrecedence(op1);
     }
 }

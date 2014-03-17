@@ -7,6 +7,8 @@ import evaluator.Expression;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+import parser.token.Operator;
+import parser.token.Parenthesis;
 
 public class ParserTests {
     
@@ -15,7 +17,7 @@ public class ParserTests {
         ParserTreeBuildingStrategy strategy = mock(ParserTreeBuildingStrategy.class);
         Token[] tokens = {
             new Constant(1),
-            Symbol.ADD,
+            Operator.ADD,
             new Constant(2)
         };
         Expression expression = new ShuntingYardParser(strategy).parse(tokens);
@@ -30,9 +32,9 @@ public class ParserTests {
         ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
         Token[] tokens = {
             new Constant(1),
-            Symbol.ADD,
+            Operator.ADD,
             new Constant(2),
-            Symbol.ADD,
+            Operator.ADD,
             new Constant(2)
         };
         assertEquals(5, parser.parse(tokens).evaluate());
@@ -43,9 +45,9 @@ public class ParserTests {
         ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
         Token[] tokens = {
             new Constant(2),
-            Symbol.ADD,
+            Operator.ADD,
             new Constant(2),
-            Symbol.MULTIPLY,
+            Operator.MULTIPLY,
             new Constant(2)
         };
         assertEquals(6, parser.parse(tokens).evaluate());
@@ -56,11 +58,42 @@ public class ParserTests {
         ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
         Token[] tokens = {
             new Constant(3),
-            Symbol.SUBTRACT,
+            Operator.SUBTRACT,
             new Constant(1),
-            Symbol.ADD,
+            Operator.ADD,
             new Constant(2)
         };
         assertEquals(4, parser.parse(tokens).evaluate());
+    }
+    
+    @Test
+    public void testOperationWithParenthesis() {
+        ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
+        Token[] tokens = {
+            Parenthesis.OPEN,
+            new Constant(2),
+            Operator.ADD,
+            new Constant(2),
+            Parenthesis.CLOSE,
+            Operator.MULTIPLY,
+            new Constant(2)
+        };
+        assertEquals(8, parser.parse(tokens).evaluate());
+    }
+    
+    @Test
+    public void testAnotherOperationWithParenthesis() {
+        ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
+        System.out.println("test2");
+        Token[] tokens = {
+            new Constant(2),
+            Operator.MULTIPLY,
+            Parenthesis.OPEN,
+            new Constant(2),
+            Operator.ADD,
+            new Constant(2),
+            Parenthesis.CLOSE
+        };
+        assertEquals(8, parser.parse(tokens).evaluate());
     }
 }
