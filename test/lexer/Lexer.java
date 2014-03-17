@@ -2,7 +2,6 @@ package lexer;
 
 import java.util.ArrayList;
 import parser.token.Constant;
-import parser.token.Operator;
 import parser.token.Token;
 
 public class Lexer {
@@ -40,6 +39,7 @@ public class Lexer {
     }
 
     private Token constant(String number) {
+        if (number.contains(".")) return new Constant(Double.valueOf(number));
         return new Constant(Integer.valueOf(number));
     }
     
