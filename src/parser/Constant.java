@@ -8,7 +8,6 @@ public class Constant<Type> implements Token<Type> {
         this.value = symbol;
     }
 
-    @Override
     public Type value() {
         return value;
     }

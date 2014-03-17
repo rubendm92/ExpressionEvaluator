@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class ExpressionFactory {
 
-    private final HashMap<String, Builder> builders;
+    private final HashMap<Symbol, Builder> builders;
     
     public ExpressionFactory() {
         this.builders = new HashMap<>();
@@ -18,28 +18,28 @@ public class ExpressionFactory {
     }
     
     private void addOperators() {
-        builders.put("+", new Builder() {
+        builders.put(Symbol.ADD, new Builder() {
 
             @Override
             public Expression build(Expression left, Expression right) {
                 return new Addition(left, right);
             }
         });
-        builders.put("-", new Builder() {
+        builders.put(Symbol.SUBTRACT, new Builder() {
 
             @Override
             public Expression build(Expression left, Expression right) {
                 return new Subtraction(left, right);
             }
         });
-        builders.put("*", new Builder() {
+        builders.put(Symbol.MULTIPLY, new Builder() {
 
             @Override
             public Expression build(Expression left, Expression right) {
                 return new Multiplication(left, right);
             }
         });
-        builders.put("/", new Builder() {
+        builders.put(Symbol.DIVIDE, new Builder() {
 
             @Override
             public Expression build(Expression left, Expression right) {
@@ -52,8 +52,8 @@ public class ExpressionFactory {
         return new Constant(token.value());
     }
     
-    public Expression buildOperation(String operator, Expression left, Expression right) {
-        return builders.get(operator).build(left, right);
+    public Expression buildOperation(Symbol symbol, Expression left, Expression right) {
+        return builders.get(symbol).build(left, right);
     }
 
     private interface Builder {

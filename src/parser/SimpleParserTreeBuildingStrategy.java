@@ -27,7 +27,7 @@ public class SimpleParserTreeBuildingStrategy implements ParserTreeBuildingStrat
     }
     
     private Expression buildOperation(Symbol symbol) {
-        return factory.buildOperation(symbol.value(), expressions.remove(0), expressions.remove(0));
+        return factory.buildOperation(symbol, expressions.remove(0), expressions.remove(0));
     }
 
     @Override
