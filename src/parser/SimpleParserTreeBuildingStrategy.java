@@ -1,5 +1,7 @@
 package parser;
 
+import parser.token.Token;
+import parser.token.Symbol;
 import evaluator.Constant;
 import evaluator.Expression;
 import java.util.Stack;
@@ -16,13 +18,13 @@ public class SimpleParserTreeBuildingStrategy implements ParserTreeBuildingStrat
 
     @Override
     public void build(Token token) {
-        if (token instanceof parser.Constant)
-            expressions.add(buildConstant((parser.Constant) token));
+        if (token instanceof parser.token.Constant)
+            expressions.add(buildConstant((parser.token.Constant) token));
         else
             expressions.add(buildOperation((Symbol) token));
     }
     
-    private Constant buildConstant(parser.Constant token) {
+    private Constant buildConstant(parser.token.Constant token) {
         return factory.buildConstant(token);
     }
     

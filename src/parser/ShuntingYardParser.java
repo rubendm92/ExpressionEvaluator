@@ -1,5 +1,8 @@
 package parser;
 
+import parser.token.Token;
+import parser.token.Symbol;
+import parser.token.Constant;
 import evaluator.Expression;
 import java.util.Stack;
 

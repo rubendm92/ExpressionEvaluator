@@ -1,5 +1,8 @@
 package parser;
 
+import parser.token.Symbol;
+import parser.token.Constant;
+import parser.token.Token;
 import evaluator.Expression;
 import org.junit.Test;
 import static org.junit.Assert.*;

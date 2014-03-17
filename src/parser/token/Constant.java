@@ -1,4 +1,4 @@
-package parser;
+package parser.token;
 
 public class Constant<Type> implements Token<Type> {
     

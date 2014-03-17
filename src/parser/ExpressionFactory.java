@@ -1,5 +1,6 @@
 package parser;
 
+import parser.token.Symbol;
 import evaluator.Constant;
 import evaluator.Expression;
 import evaluator.operations.binary.Addition;
@@ -48,7 +49,7 @@ public class ExpressionFactory {
         });
     }
     
-    public Constant buildConstant(parser.Constant token) {
+    public Constant buildConstant(parser.token.Constant token) {
         return new Constant(token.value());
     }
     
