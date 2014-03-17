@@ -13,7 +13,7 @@ public class ParserTests {
         ParserTreeBuildingStrategy strategy = mock(ParserTreeBuildingStrategy.class);
         Token[] tokens = {
             constant(1),
-            symbol("+"),
+            symbol("+", 0),
             constant(2)
         };
         Expression expression = new ShuntingYardParser(strategy).parse(tokens);
@@ -28,9 +28,9 @@ public class ParserTests {
         ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
         Token[] tokens = {
             constant(1),
-            symbol("+"),
+            symbol("+", 0),
             constant(2),
-            symbol("+"),
+            symbol("+", 0),
             constant(2)
         };
         assertEquals(5, parser.parse(tokens).evaluate());
@@ -41,9 +41,9 @@ public class ParserTests {
         ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
         Token[] tokens = {
             constant(2),
-            symbol("+"),
+            symbol("+", 0),
             constant(2),
-            symbol("*"),
+            symbol("+", 1),
             constant(2)
         };
         assertEquals(6, parser.parse(tokens).evaluate());
@@ -54,9 +54,9 @@ public class ParserTests {
         ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
         Token[] tokens = {
             constant(3),
-            symbol("-"),
+            symbol("-", 0),
             constant(1),
-            symbol("+"),
+            symbol("+", 0),
             constant(2)
         };
         assertEquals(4, parser.parse(tokens).evaluate());

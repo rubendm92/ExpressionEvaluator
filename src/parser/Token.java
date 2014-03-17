@@ -6,8 +6,8 @@ public abstract class Token {
         return new Constant(value);
     }
     
-    public static Symbol symbol(String token) {
-        return new Symbol(token);
+    public static Symbol symbol(String token, int precedence) {
+        return new Symbol(token, precedence);
     }
 
     public static class Constant<Type> extends Token {
@@ -22,15 +22,23 @@ public abstract class Token {
         }
     }
 
-    public static class Symbol extends Token {
+    public static class Symbol extends Token implements Comparable<Symbol>{
+        
         private final String symbol;
+        private final int precedence;
 
-        private Symbol(String symbol) {
+        private Symbol(String symbol, int precedence) {
             this.symbol = symbol;
+            this.precedence = precedence;
         }
         
         public String symbol() {
             return symbol;
+        }
+
+        @Override
+        public int compareTo(Symbol symbol) {
+            return (precedence - symbol.precedence);
         }
     }
 }

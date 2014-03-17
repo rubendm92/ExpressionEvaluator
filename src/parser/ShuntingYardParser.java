@@ -45,8 +45,6 @@ public class ShuntingYardParser implements Parser {
 
     private boolean topSymbolHasLessPrecedenceThanNew(Token.Symbol symbol) {
         if (symbols.isEmpty()) return false;
-        if (symbol.symbol().equals("*") || symbol.symbol().equals("/"))
-            return (symbols.get(symbols.size() - 1).symbol().equals("+")) || (symbols.get(symbols.size() - 1).symbol().equals("-"));
-        return false;
+        return symbols.get(symbols.size() - 1).compareTo(symbol) > 0;
     }
 }
