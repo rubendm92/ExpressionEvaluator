@@ -16,4 +16,8 @@ public class Operator implements Symbol{
     public boolean hasMorePrecedence(Operator symbol) {
         return precedence > symbol.precedence;
     }
+    
+    public boolean hasEqualPrecedence(Operator symbol) {
+        return precedence == symbol.precedence;
+    }
 }

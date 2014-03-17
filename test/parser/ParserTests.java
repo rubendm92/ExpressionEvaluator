@@ -63,7 +63,8 @@ public class ParserTests {
             Operator.ADD,
             new Constant(2)
         };
-        assertEquals(4, parser.parse(tokens).evaluate());
+        Object val = parser.parse(tokens).evaluate();
+        assertEquals(4, val);
     }
     
     @Test
@@ -84,9 +85,8 @@ public class ParserTests {
     @Test
     public void testAnotherOperationWithParenthesis() {
         ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
-        System.out.println("test2");
         Token[] tokens = {
-            new Constant(2),
+            new Constant(3),
             Operator.MULTIPLY,
             Parenthesis.OPEN,
             new Constant(2),
@@ -94,6 +94,6 @@ public class ParserTests {
             new Constant(2),
             Parenthesis.CLOSE
         };
-        assertEquals(8, parser.parse(tokens).evaluate());
+        assertEquals(12, parser.parse(tokens).evaluate());
     }
 }

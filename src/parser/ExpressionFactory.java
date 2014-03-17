@@ -7,6 +7,7 @@ import evaluator.operations.binary.Addition;
 import evaluator.operations.binary.Division;
 import evaluator.operations.binary.Multiplication;
 import evaluator.operations.binary.Subtraction;
+import evaluator.operations.unary.Minus;
 import java.util.HashMap;
 import parser.token.Operator;
 import parser.token.Parenthesis;
@@ -32,7 +33,7 @@ public class ExpressionFactory {
 
             @Override
             public Expression build(Expression left, Expression right) {
-                return new Subtraction(left, right);
+                return new Addition(left, new Minus(right));
             }
         });
         builders.put(Operator.MULTIPLY, new Builder() {
