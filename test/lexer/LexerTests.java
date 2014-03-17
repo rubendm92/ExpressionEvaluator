@@ -40,4 +40,12 @@ public class LexerTests {
         ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
         assertEquals(0, parser.parse(tokens.toArray(new Token[]{})).evaluate());
     }
+    
+    @Test
+    public void testAnalyzeExpressionWithParenthesis() {
+        Lexer lexer = new Lexer();
+        ArrayList<Token> tokens = lexer.analyze("(4 - 2) * 2");
+        ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
+        assertEquals(4, parser.parse(tokens.toArray(new Token[]{})).evaluate());
+    }
 }
