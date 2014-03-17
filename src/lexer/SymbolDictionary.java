@@ -17,6 +17,10 @@ public class SymbolDictionary {
     public Symbol getSymbol(char operator) {
         return dictionary.get(operator);
     }
+    
+    public boolean isSymbol(char operator) {
+        return getSymbol(operator) != null;
+    }
 
     private void addOperators() {
         dictionary.put('+', Operator.ADD);
