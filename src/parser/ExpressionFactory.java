@@ -7,10 +7,8 @@ import evaluator.operations.binary.Addition;
 import evaluator.operations.binary.Division;
 import evaluator.operations.binary.Multiplication;
 import evaluator.operations.binary.Subtraction;
-import evaluator.operations.unary.Minus;
 import java.util.HashMap;
 import parser.token.Operator;
-import parser.token.Parenthesis;
 
 public class ExpressionFactory {
 
@@ -33,7 +31,7 @@ public class ExpressionFactory {
 
             @Override
             public Expression build(Expression left, Expression right) {
-                return new Addition(left, new Minus(right));
+                return new Subtraction(left, right);
             }
         });
         builders.put(Operator.MULTIPLY, new Builder() {
@@ -48,20 +46,6 @@ public class ExpressionFactory {
             @Override
             public Expression build(Expression left, Expression right) {
                 return new Division(left, right);
-            }
-        });
-        builders.put(Parenthesis.OPEN, new Builder() {
-
-            @Override
-            public Expression build(Expression left, Expression right) {
-                throw new RuntimeException("Parentesis abierto");
-            }
-        });
-        builders.put(Parenthesis.CLOSE, new Builder() {
-
-            @Override
-            public Expression build(Expression left, Expression right) {
-                throw new RuntimeException("Parentesis cerrado");
             }
         });
     }
