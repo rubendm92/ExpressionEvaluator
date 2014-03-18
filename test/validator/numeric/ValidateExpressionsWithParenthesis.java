@@ -1,6 +1,5 @@
 package validator.numeric;
 
-import validator.numeric.NumericExpressionValidator;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
