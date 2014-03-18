@@ -84,4 +84,16 @@ public class ExpressionValidatorTests {
             fail("Test should not throw InvalidExpressionException");
         }
     }
+    
+    @Test
+    public void testValidateInvalidExpression() {
+        try {
+            ExpressionValidator validator = new ExpressionValidator();
+            validator.check("2.2b/2.3");
+            fail("Test should not throw InvalidExpressionException");
+        } catch (InvalidExpressionException ex) {
+        } catch (Exception ex) {
+            fail("Test should not throw Exception");
+        }
+    }
 }
