@@ -17,55 +17,45 @@ public class ValidateExpressionsWithParenthesis {
     
     @Test
     public void testValidExpressionWithParenthesis() {
-        try {
-            validator.check("(2.2+2.3)");
-        } catch (InvalidExpressionException ex) {
-            fail("Test should not throw InvalidExpressionException");
-        }
+        testShouldPass("(2.2+2.3)");
     }
     
     @Test
     public void testValidExpressionWithOperationAfterParenthesis() {
-        try {
-            validator.check("(2.2+2.3)*3");
-        } catch (InvalidExpressionException ex) {
-            fail("Test should not throw InvalidExpressionException");
-        }
+        testShouldPass("(2.2+2.3)*3");
     }
     
     @Test
     public void testValidExpressionWithOperationBeforeParenthesis() {
-        try {
-            validator.check("3*(2.2+2.3)");
-        } catch (InvalidExpressionException ex) {
-            fail("Test should not throw InvalidExpressionException");
-        }
+        testShouldPass("3*(2.2+2.3)");
     }
     
     @Test
     public void testValidExpressionWithTwoParenthesis() {
+        testShouldPass("(2.2+2.3)*(3-2)");
+    }
+    
+    @Test
+    public void testInvalidExpressionWithParenthesis() {
+        testShouldFail("((2.2+2.3)");
+    }
+    
+    @Test
+    public void testAnotherInvalidExpressionWithParenthesis() {
+        testShouldFail("(2.2+2)+(3+)");
+    }
+    
+    public void testShouldPass(String expression) {
         try {
-            validator.check("(2.2+2.3)*(3-2)");
+            validator.check(expression);
         } catch (InvalidExpressionException ex) {
             fail("Test should not throw InvalidExpressionException");
         }
     }
     
-    @Test
-    public void testInvalidExpressionWithParenthesis() {
+    public void testShouldFail(String expression) {
         try {
-            validator.check("((2.2+2.3)");
-            fail("Test should throw InvalidExpressionException");
-        } catch (InvalidExpressionException ex) {
-        } catch (Exception ex) {
-            fail("Test should not throw Exception");
-        }
-    }
-    
-    @Test
-    public void testAnotherInvalidExpressionWithParenthesis() {
-        try {
-            validator.check("(2.2+2)+(3+)");
+            validator.check(expression);
             fail("Test should throw InvalidExpressionException");
         } catch (InvalidExpressionException ex) {
         } catch (Exception ex) {
