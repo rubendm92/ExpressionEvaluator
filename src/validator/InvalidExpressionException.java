@@ -1,4 +1,4 @@
-package lexer;
+package validator;
 
 public class InvalidExpressionException extends RuntimeException{
 }
