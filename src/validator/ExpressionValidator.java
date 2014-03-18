@@ -8,8 +8,9 @@ public class ExpressionValidator {
     private final String closeParenthesisRegex = "[\\)]*";
     
     public void check(String expression) {
-        if (!checkParenthesis(expression)) throw new InvalidExpressionException();
-        if (expression.matches(regularExpression())) return;
+        String expressionWithoutSpaces = expression.replace(" ", "");
+        if (!checkParenthesis(expressionWithoutSpaces)) throw new InvalidExpressionException();
+        if (expressionWithoutSpaces.matches(regularExpression())) return;
         throw new InvalidExpressionException();
     }
     

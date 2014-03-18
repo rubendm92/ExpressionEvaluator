@@ -1,17 +1,15 @@
 package validator;
 
-import validator.ExpressionValidator;
-import validator.InvalidExpressionException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class ExpressionValidatorTests {
+public class ValidateExpressionsWithoutParenthesisTests {
     
     @Test
     public void testValidateAdditionOfIntegerExpression() {
         try {
             ExpressionValidator validator = new ExpressionValidator();
-            validator.check("2+2");
+            validator.check("2 + 2");
         } catch (InvalidExpressionException ex) {
             fail("Test should not throw InvalidExpressionException");
         }
@@ -21,7 +19,7 @@ public class ExpressionValidatorTests {
     public void testValidateAdditionOfDoubleExpression() {
         try {
             ExpressionValidator validator = new ExpressionValidator();
-            validator.check("2.2+2.3");
+            validator.check("2.2 + 2.3");
         } catch (InvalidExpressionException ex) {
             fail("Test should not throw InvalidExpressionException");
         }
@@ -31,7 +29,7 @@ public class ExpressionValidatorTests {
     public void testValidateSubtractionOfIntegerExpression() {
         try {
             ExpressionValidator validator = new ExpressionValidator();
-            validator.check("2-2");
+            validator.check("2 - 2");
         } catch (InvalidExpressionException ex) {
             fail("Test should not throw InvalidExpressionException");
         }
@@ -41,7 +39,7 @@ public class ExpressionValidatorTests {
     public void testValidateSubtractionOfDoubleExpression() {
         try {
             ExpressionValidator validator = new ExpressionValidator();
-            validator.check("2.2-2.3");
+            validator.check("2.2 - 2.3");
         } catch (InvalidExpressionException ex) {
             fail("Test should not throw InvalidExpressionException");
         }
@@ -51,7 +49,7 @@ public class ExpressionValidatorTests {
     public void testValidateMultiplicationOfIntegerExpression() {
         try {
             ExpressionValidator validator = new ExpressionValidator();
-            validator.check("22*11");
+            validator.check("22 * 11");
         } catch (InvalidExpressionException ex) {
             fail("Test should not throw InvalidExpressionException");
         }
@@ -61,7 +59,7 @@ public class ExpressionValidatorTests {
     public void testValidateMultiplicationOfDoubleExpression() {
         try {
             ExpressionValidator validator = new ExpressionValidator();
-            validator.check("4.22*1.3");
+            validator.check("4.22 * 1.3");
         } catch (InvalidExpressionException ex) {
             fail("Test should not throw InvalidExpressionException");
         }
@@ -71,7 +69,7 @@ public class ExpressionValidatorTests {
     public void testValidateDivisionOfIntegerExpression() {
         try {
             ExpressionValidator validator = new ExpressionValidator();
-            validator.check("2/2");
+            validator.check("2 / 2");
         } catch (InvalidExpressionException ex) {
             fail("Test should not throw InvalidExpressionException");
         }
@@ -81,14 +79,14 @@ public class ExpressionValidatorTests {
     public void testValidateDivisionnOfDoubleExpression() {
         try {
             ExpressionValidator validator = new ExpressionValidator();
-            validator.check("2.2/2.3");
+            validator.check("2.2 / 2.3");
         } catch (InvalidExpressionException ex) {
             fail("Test should not throw InvalidExpressionException");
         }
     }
     
     @Test
-    public void testValidateInvalidExpression() {
+    public void testInvalidExpression() {
         try {
             ExpressionValidator validator = new ExpressionValidator();
             validator.check("2.2b/2.3");
@@ -100,62 +98,10 @@ public class ExpressionValidatorTests {
     }
     
     @Test
-    public void testValidExpressionWithParenthesis() {
+    public void testExpressionWithMoreThanTwoOperands() {
         try {
             ExpressionValidator validator = new ExpressionValidator();
-            validator.check("(2.2+2.3)");
-        } catch (InvalidExpressionException ex) {
-            fail("Test should not throw InvalidExpressionException");
-        }
-    }
-    
-    @Test
-    public void testValidExpressionWithOperationAfterParenthesis() {
-        try {
-            ExpressionValidator validator = new ExpressionValidator();
-            validator.check("(2.2+2.3)*3");
-        } catch (InvalidExpressionException ex) {
-            fail("Test should not throw InvalidExpressionException");
-        }
-    }
-    
-    @Test
-    public void testValidExpressionWithOperationBeforeParenthesis() {
-        try {
-            ExpressionValidator validator = new ExpressionValidator();
-            validator.check("3*(2.2+2.3)");
-        } catch (InvalidExpressionException ex) {
-            fail("Test should not throw InvalidExpressionException");
-        }
-    }
-    
-    @Test
-    public void testValidExpressionWithTwoParenthesis() {
-        try {
-            ExpressionValidator validator = new ExpressionValidator();
-            validator.check("(2.2+2.3)*(3-2)");
-        } catch (InvalidExpressionException ex) {
-            fail("Test should not throw InvalidExpressionException");
-        }
-    }
-    
-    @Test
-    public void testInvalidExpressionWithParenthesis() {
-        try {
-            ExpressionValidator validator = new ExpressionValidator();
-            validator.check("((2.2+2.3)");
-            fail("Test should throw InvalidExpressionException");
-        } catch (InvalidExpressionException ex) {
-        } catch (Exception ex) {
-            fail("Test should not throw Exception");
-        }
-    }
-    
-    @Test
-    public void testAnotherInvalidExpressionWithParenthesis() {
-        try {
-            ExpressionValidator validator = new ExpressionValidator();
-            validator.check("(2.2+2)+(3+)");
+            validator.check("2.2b/2.3");
             fail("Test should throw InvalidExpressionException");
         } catch (InvalidExpressionException ex) {
         } catch (Exception ex) {
