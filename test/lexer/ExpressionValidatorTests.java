@@ -96,4 +96,14 @@ public class ExpressionValidatorTests {
             fail("Test should not throw Exception");
         }
     }
+    
+    @Test
+    public void testValidExpressionWithParenthesis() {
+        try {
+            ExpressionValidator validator = new ExpressionValidator();
+            validator.check("(2.2+2.3)");
+        } catch (InvalidExpressionException ex) {
+            fail("Test should not throw InvalidExpressionException");
+        }
+    }
 }

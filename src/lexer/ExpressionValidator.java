@@ -3,7 +3,7 @@ package lexer;
 public class ExpressionValidator {
 
     public void check(String expression) {
-        if (expression.matches(numberRegex() + "+(\\+|\\-|\\*|\\/)+" + numberRegex())) return;
+        if (expression.matches("[\\(]*" + numberRegex() + "+(\\+|\\-|\\*|\\/)+" + numberRegex() + "[\\)]*")) return;
         throw new InvalidExpressionException();
     }
     
