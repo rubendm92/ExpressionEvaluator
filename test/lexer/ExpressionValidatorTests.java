@@ -44,4 +44,44 @@ public class ExpressionValidatorTests {
             fail("Test should not throw InvalidExpressionException");
         }
     }
+    
+    @Test
+    public void testValidateMultiplicationOfIntegerExpression() {
+        try {
+            ExpressionValidator validator = new ExpressionValidator();
+            validator.check("22*11");
+        } catch (InvalidExpressionException ex) {
+            fail("Test should not throw InvalidExpressionException");
+        }
+    }
+    
+    @Test
+    public void testValidateMultiplicationOfDoubleExpression() {
+        try {
+            ExpressionValidator validator = new ExpressionValidator();
+            validator.check("4.22*1.3");
+        } catch (InvalidExpressionException ex) {
+            fail("Test should not throw InvalidExpressionException");
+        }
+    }
+    
+    @Test
+    public void testValidateDivisionOfIntegerExpression() {
+        try {
+            ExpressionValidator validator = new ExpressionValidator();
+            validator.check("2/2");
+        } catch (InvalidExpressionException ex) {
+            fail("Test should not throw InvalidExpressionException");
+        }
+    }
+    
+    @Test
+    public void testValidateDivisionnOfDoubleExpression() {
+        try {
+            ExpressionValidator validator = new ExpressionValidator();
+            validator.check("2.2/2.3");
+        } catch (InvalidExpressionException ex) {
+            fail("Test should not throw InvalidExpressionException");
+        }
+    }
 }
