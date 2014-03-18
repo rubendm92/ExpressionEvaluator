@@ -24,4 +24,24 @@ public class ExpressionValidatorTests {
             fail("Test should not throw InvalidExpressionException");
         }
     }
+    
+    @Test
+    public void testValidateSubtractionOfIntegerExpression() {
+        try {
+            ExpressionValidator validator = new ExpressionValidator();
+            validator.check("2-2");
+        } catch (InvalidExpressionException ex) {
+            fail("Test should not throw InvalidExpressionException");
+        }
+    }
+    
+    @Test
+    public void testValidateSubtractionOfDoubleExpression() {
+        try {
+            ExpressionValidator validator = new ExpressionValidator();
+            validator.check("2.2-2.3");
+        } catch (InvalidExpressionException ex) {
+            fail("Test should not throw InvalidExpressionException");
+        }
+    }
 }
