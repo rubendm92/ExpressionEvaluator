@@ -19,13 +19,7 @@ public class NumericExpressionValidator implements ExpressionValidator {
     }
     
     private boolean checkParenthesis(String expression) {
-        int openParenthesis = 0;
-        int closedParenthesis = 0;
-        for (char character : expression.toCharArray()) {
-            if (character == '(') openParenthesis++;
-            if (character == ')') closedParenthesis++;
-        }
-        return openParenthesis == closedParenthesis;
+        return countCharacter(expression, (char character) -> (character == '(')) == countCharacter(expression, (char character) -> (character == ')'));
     }
     
     private String regularExpression() {
@@ -46,5 +40,16 @@ public class NumericExpressionValidator implements ExpressionValidator {
     
     private String simpleRegularExpression() {
         return numberRegex + operatorsRegex + numberRegex;
+    }
+
+    private int countCharacter(String expression, Function function) {
+        int characterCount = 0;
+        for (char character : expression.toCharArray())
+            if (function.apply(character)) characterCount++;
+        return characterCount;
+    }
+    
+    private interface Function {
+        public boolean apply(char character);
     }
 }
