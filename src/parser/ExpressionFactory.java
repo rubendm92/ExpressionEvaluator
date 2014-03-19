@@ -20,34 +20,10 @@ public class ExpressionFactory {
     }
     
     private void addOperators() {
-        builders.put(Operator.ADD, new Builder() {
-
-            @Override
-            public Expression build(Expression left, Expression right) {
-                return new Addition(left, right);
-            }
-        });
-        builders.put(Operator.SUBTRACT, new Builder() {
-
-            @Override
-            public Expression build(Expression left, Expression right) {
-                return new Subtraction(left, right);
-            }
-        });
-        builders.put(Operator.MULTIPLY, new Builder() {
-
-            @Override
-            public Expression build(Expression left, Expression right) {
-                return new Multiplication(left, right);
-            }
-        });
-        builders.put(Operator.DIVIDE, new Builder() {
-
-            @Override
-            public Expression build(Expression left, Expression right) {
-                return new Division(left, right);
-            }
-        });
+        builders.put(Operator.ADD, (Builder) (Expression left, Expression right) -> new Addition(left, right));
+        builders.put(Operator.SUBTRACT, (Builder) (Expression left, Expression right) -> new Subtraction(left, right));
+        builders.put(Operator.MULTIPLY, (Builder) (Expression left, Expression right) -> new Multiplication(left, right));
+        builders.put(Operator.DIVIDE, (Builder) (Expression left, Expression right) -> new Division(left, right));
     }
     
     public Constant buildConstant(parser.token.Constant token) {
