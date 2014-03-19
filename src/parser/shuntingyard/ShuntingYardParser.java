@@ -83,12 +83,8 @@ public class ShuntingYardParser implements Parser {
 
     private int compareNewSymbolWithTop(Symbol symbol) {
         if (symbols.isEmpty()) return -1;
-        if (topSymbol() == Parenthesis.OPEN) return -1;
-        return operator(symbol).compareTo(operator(topSymbol()));
-    }
-    
-    private Symbol topSymbol() {
-        return symbols.get(symbols.size() - 1);
+        if (symbols.peek() == Parenthesis.OPEN) return -1;
+        return operator(symbol).compareTo(operator(symbols.peek()));
     }
     
     private Operator operator(Symbol symbol) {
