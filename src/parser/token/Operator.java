@@ -13,10 +13,6 @@ public class Operator implements Symbol, Comparable<Operator>{
         this.precedence = precedence;
     }
     
-    public boolean hasMorePrecedence(Operator symbol) {
-        return precedence > symbol.precedence;
-    }
-    
     @Override
     public int compareTo(Operator symbol) {
         return (precedence - symbol.precedence);
