@@ -2,7 +2,6 @@ package parser;
 
 import parser.shuntingyard.SimpleParserTreeBuildingStrategy;
 import parser.shuntingyard.ShuntingYardParser;
-import parser.token.Symbol;
 import parser.token.Constant;
 import parser.token.Token;
 import evaluator.Expression;

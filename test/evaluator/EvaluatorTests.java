@@ -24,6 +24,7 @@ public class EvaluatorTests {
         assertEquals(2.4, new Addition(new Constant(2), new Constant(0.4)).evaluate());
         assertEquals(1.3, new Addition(new Constant(0.3), new Constant(1)).evaluate());
         assertEquals(4.1, new Addition(new Constant(1.2), new Constant(2.9)).evaluate());
+        assertEquals("HolaMundo", new Addition(new Constant("Hola"), new Constant("Mundo")).evaluate());
     }
 
     @Test
