@@ -6,6 +6,7 @@ import evaluator.operations.binary.Division;
 import evaluator.operations.binary.Multiplication;
 import evaluator.operations.binary.Or;
 import evaluator.operations.binary.Subtraction;
+import evaluator.operations.binary.Xor;
 import evaluator.operations.unary.Minus;
 import evaluator.operators.InvalidOperationException;
 import java.util.ArrayList;
@@ -76,6 +77,12 @@ public class EvaluatorTests {
     public void testOr() {
         assertEquals(true, new Or(new Constant(true), new Constant(false)).evaluate());
         assertEquals(7, new Or(new Constant(7), new Constant(4)).evaluate());
+    }
+    
+    @Test
+    public void testXor() {
+        assertEquals(false, new Xor(new Constant(true), new Constant(true)).evaluate());
+        assertEquals(3, new Xor(new Constant(7), new Constant(4)).evaluate());
     }
     
     @Test
