@@ -8,6 +8,7 @@ public class Lexer {
     
     private final SymbolDictionary dictionary;
     private ArrayList<Token> tokens;
+    private String currentNumber;
 
     public Lexer() {
         this.dictionary = new SymbolDictionary();
@@ -15,16 +16,8 @@ public class Lexer {
     
     public ArrayList<Token> analyze(String expression) {
         tokens = new ArrayList<>();
-        String number = "";
-        for (char character : formatExpression(expression)) {
-            if (dictionary.isSymbol(character)) {
-                processNumber(number);
-                tokens.add(dictionary.getSymbol(character));
-                number = "";
-            } else
-                number += character;
-        }
-        processNumber(number);
+        currentNumber = "";
+        processString(formatExpression(expression));
         return tokens;
     }
     
@@ -32,9 +25,28 @@ public class Lexer {
         return expression.replace(" ", "").toCharArray();
     }
 
-    private void processNumber(String number) {
-        if ("".equals(number)) return;
-        if (number.contains(".")) tokens.add(new Constant(Double.valueOf(number)));
-        else tokens.add(new Constant(Integer.valueOf(number)));
+    private void processString(char[] expression) {
+        for (char character : expression)
+            processCharacter(character);
+        processNumber();
+    }
+
+    private void processCharacter(char character) {
+        if (dictionary.isSymbol(character))
+            processSymbol(character);
+        else
+            currentNumber += character;
+    }
+
+    private void processSymbol(char character) {
+        processNumber();
+        tokens.add(dictionary.getSymbol(character));
+    }
+    
+    private void processNumber() {
+        if ("".equals(currentNumber)) return;
+        if (currentNumber.contains(".")) tokens.add(new Constant(Double.valueOf(currentNumber)));
+        else tokens.add(new Constant(Integer.valueOf(currentNumber)));
+        currentNumber = "";
     }
 }
