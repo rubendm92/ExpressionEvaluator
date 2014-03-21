@@ -29,6 +29,7 @@ public class EvaluatorTests {
         assertEquals(2.4, new Addition(new Constant(2), new Constant(0.4)).evaluate());
         assertEquals(1.3, new Addition(new Constant(0.3), new Constant(1)).evaluate());
         assertEquals(4.1, new Addition(new Constant(1.2), new Constant(2.9)).evaluate());
+        assertEquals("HolaMundo", new Addition(new Constant("Hola"), new Constant("Mundo")).evaluate());
     }
 
     @Test
@@ -37,6 +38,7 @@ public class EvaluatorTests {
         assertEquals(1.8, (double) new Subtraction(new Constant(3), new Constant(1.2)).evaluate(), 0.01);
         assertEquals(-0.7, new Subtraction(new Constant(0.3), new Constant(1)).evaluate());
         assertEquals(1, (double) new Subtraction(new Constant(1.5), new Constant(0.5)).evaluate(), 0.01);
+        assertEquals("Hola", new Subtraction(new Constant("HolaMundo"), new Constant("Mundo")).evaluate());
     }
 
     @Test
