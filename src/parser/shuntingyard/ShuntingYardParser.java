@@ -28,11 +28,10 @@ public class ShuntingYardParser implements Parser {
     }
 
     private void parse(Token token) {
-        if (token instanceof Constant) {
+        if (token instanceof Constant)
             parseConstant((Constant) token);
-        } else if (token instanceof Symbol) {
+        else if (token instanceof Symbol)
             parseSymbol((Symbol) token);
-        }
     }
 
     private void parseConstant(Constant constant) {
@@ -67,6 +66,12 @@ public class ShuntingYardParser implements Parser {
         symbols.push(operator);
     }
 
+    private int compareNewSymbolWithTop(Symbol symbol) {
+        if (symbols.empty()) return 1;
+        if (symbols.peek() == Parenthesis.OPEN) return 1;
+        return ((Operator) symbol).compareTo((Operator)(symbols.peek()));
+    }
+    
     private Expression getExpression() {
         while (!symbols.empty()) {
             Symbol symbol = symbols.pop();
@@ -74,15 +79,5 @@ public class ShuntingYardParser implements Parser {
             strategy.build(symbol);
         }
         return strategy.getExpression();
-    }
-
-    private int compareNewSymbolWithTop(Symbol symbol) {
-        if (symbols.isEmpty()) return 1;
-        if (symbols.peek() == Parenthesis.OPEN) return 1;
-        return operator(symbol).compareTo(operator(symbols.peek()));
-    }
-    
-    private Operator operator(Symbol symbol) {
-        return (Operator) symbol;
     }
 }
