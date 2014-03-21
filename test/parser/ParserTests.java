@@ -1,16 +1,16 @@
 package parser;
 
-import parser.shuntingyard.SimpleParserTreeBuildingStrategy;
-import parser.shuntingyard.ShuntingYardParser;
-import parser.token.Symbol;
-import parser.token.Constant;
-import parser.token.Token;
 import evaluator.Expression;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import parser.shuntingyard.ShuntingYardParser;
+import parser.shuntingyard.SimpleParserTreeBuildingStrategy;
+import parser.token.Constant;
 import parser.token.Operator;
 import parser.token.Parenthesis;
+import parser.token.Token;
 
 public class ParserTests {
     
@@ -97,5 +97,20 @@ public class ParserTests {
             Parenthesis.CLOSE
         };
         assertEquals(12, parser.parse(tokens).evaluate());
+    }
+    
+    @Test
+    public void testExpressionWithThreeOperators() {
+        ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
+        Token[] tokens = {
+            new Constant(30),
+            Operator.SUBTRACT,
+            new Constant(8),
+            Operator.DIVIDE,
+            new Constant(4),
+            Operator.SUBTRACT,
+            new Constant(8)
+        };
+        assertEquals(20, parser.parse(tokens).evaluate());
     }
 }

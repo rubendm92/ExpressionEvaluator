@@ -1,14 +1,14 @@
 package parser.shuntingyard;
 
-import parser.token.Token;
-import parser.token.Symbol;
-import parser.token.Constant;
 import evaluator.Expression;
 import java.util.Stack;
 import parser.Parser;
 import parser.ParserTreeBuildingStrategy;
+import parser.token.Constant;
 import parser.token.Operator;
 import parser.token.Parenthesis;
+import parser.token.Symbol;
+import parser.token.Token;
 
 public class ShuntingYardParser implements Parser {
 
@@ -22,9 +22,8 @@ public class ShuntingYardParser implements Parser {
 
     @Override
     public Expression parse(Token[] tokens) {
-        for (Token token : tokens) {
+        for (Token token : tokens)
             parse(token);
-        }
         return getExpression();
     }
 
@@ -50,9 +49,8 @@ public class ShuntingYardParser implements Parser {
     private void parseParenthesis(Parenthesis parenthesis) {
         if (parenthesis == Parenthesis.OPEN)
             symbols.push(parenthesis);
-        else if (parenthesis == Parenthesis.CLOSE) {
+        else if (parenthesis == Parenthesis.CLOSE)
             buildContentInsideParenthesis();
-        }
     }
 
     private void buildContentInsideParenthesis() {
@@ -64,12 +62,9 @@ public class ShuntingYardParser implements Parser {
     }
     
     private void parseOperator(Operator operator) {
-        if (compareNewSymbolWithTop(operator) > 0)
-            strategy.build(operator);
-        else {
-            if (compareNewSymbolWithTop(operator) == 0) strategy.build(symbols.pop());
-            symbols.push(operator);
-        }
+        while (compareNewSymbolWithTop(operator) <= 0)
+            strategy.build(symbols.pop());
+        symbols.push(operator);
     }
 
     private Expression getExpression() {
@@ -82,8 +77,8 @@ public class ShuntingYardParser implements Parser {
     }
 
     private int compareNewSymbolWithTop(Symbol symbol) {
-        if (symbols.isEmpty()) return -1;
-        if (symbols.peek() == Parenthesis.OPEN) return -1;
+        if (symbols.isEmpty()) return 1;
+        if (symbols.peek() == Parenthesis.OPEN) return 1;
         return operator(symbol).compareTo(operator(symbols.peek()));
     }
     

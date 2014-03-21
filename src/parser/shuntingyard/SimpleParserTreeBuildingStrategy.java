@@ -1,12 +1,12 @@
 package parser.shuntingyard;
 
-import parser.token.Token;
-import parser.token.Symbol;
 import evaluator.Constant;
 import evaluator.Expression;
 import java.util.Stack;
 import parser.ExpressionFactory;
 import parser.ParserTreeBuildingStrategy;
+import parser.token.Symbol;
+import parser.token.Token;
 
 public class SimpleParserTreeBuildingStrategy implements ParserTreeBuildingStrategy {
 

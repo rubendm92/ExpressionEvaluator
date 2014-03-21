@@ -1,6 +1,5 @@
 package parser;
 
-import parser.token.Symbol;
 import evaluator.Constant;
 import evaluator.Expression;
 import evaluator.operations.binary.Addition;
@@ -9,6 +8,7 @@ import evaluator.operations.binary.Multiplication;
 import evaluator.operations.binary.Subtraction;
 import java.util.HashMap;
 import parser.token.Operator;
+import parser.token.Symbol;
 
 public class ExpressionFactory {
 
