@@ -1,14 +1,17 @@
 package evaluator;
 
-import evaluator.operators.InvalidOperationException;
-import evaluator.operations.binary.Subtraction;
 import evaluator.operations.binary.Addition;
+import evaluator.operations.binary.And;
 import evaluator.operations.binary.Division;
 import evaluator.operations.binary.Multiplication;
+import evaluator.operations.binary.Subtraction;
 import evaluator.operations.unary.Minus;
+import evaluator.operators.InvalidOperationException;
 import java.util.ArrayList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class EvaluatorTests {
 
@@ -60,6 +63,12 @@ public class EvaluatorTests {
         } catch (Exception ex) {
             fail("Type of exception was not the expected.");
         }
+    }
+    
+    @Test
+    public void testAnd() {
+        assertEquals(false, new And(new Constant(true), new Constant(false)).evaluate());
+        assertEquals(4, new And(new Constant(6), new Constant(4)).evaluate());
     }
     
     @Test
