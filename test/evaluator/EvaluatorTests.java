@@ -1,5 +1,6 @@
 package evaluator;
 
+import datatype.ComplexNumber;
 import evaluator.operations.binary.Addition;
 import evaluator.operations.binary.And;
 import evaluator.operations.binary.Division;
@@ -30,6 +31,7 @@ public class EvaluatorTests {
         assertEquals(1.3, new Addition(new Constant(0.3), new Constant(1)).evaluate());
         assertEquals(4.1, new Addition(new Constant(1.2), new Constant(2.9)).evaluate());
         assertEquals("HolaMundo", new Addition(new Constant("Hola"), new Constant("Mundo")).evaluate());
+        assertEquals(new ComplexNumber(2, 2), new Addition(new Constant(new ComplexNumber(3, -1)), new Constant(new ComplexNumber(-1, 3))).evaluate());
     }
 
     @Test

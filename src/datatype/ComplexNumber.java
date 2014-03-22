@@ -1,6 +1,6 @@
 package datatype;
 
-public class ComplexNumber<TypeReal extends Number, TypeImaginary extends Number> {
+public class ComplexNumber<TypeReal, TypeImaginary> {
     
     private final TypeReal real;
     private final TypeImaginary imaginary;
