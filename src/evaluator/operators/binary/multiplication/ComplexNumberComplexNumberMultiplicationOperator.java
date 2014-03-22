@@ -2,6 +2,7 @@ package evaluator.operators.binary.multiplication;
 
 import datatype.ComplexNumber;
 import evaluator.Constant;
+import evaluator.Expression;
 import evaluator.operations.binary.Addition;
 import evaluator.operations.binary.Multiplication;
 import evaluator.operations.binary.Subtraction;
@@ -28,7 +29,7 @@ public class ComplexNumberComplexNumberMultiplicationOperator implements BinaryO
         return new Constant(object);
     }
     
-    private Object multiply(Constant left, Constant right) {
+    private Object multiply(Expression left, Expression right) {
         return new Multiplication(left, right).evaluate();
     }
     

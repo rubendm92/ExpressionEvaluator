@@ -2,6 +2,7 @@ package evaluator.operators.binary.multiplication;
 
 import datatype.ComplexNumber;
 import evaluator.Constant;
+import evaluator.Expression;
 import evaluator.operations.binary.Multiplication;
 import evaluator.operators.binary.BinaryOperator;
 
@@ -9,7 +10,11 @@ public class ComplexNumberIntegerMultiplicationOperator implements BinaryOperato
 
     @Override
     public Object evaluate(Object left, Object right) {
-        return new ComplexNumber(new Multiplication(getReal(left), new Constant(right)).evaluate(), new Multiplication(getImaginary(left), new Constant(right)).evaluate());
+        return new ComplexNumber(multiply(getReal(left), new Constant(right)), multiply(getImaginary(left), new Constant(right)));
+    }
+    
+    private Object multiply(Expression left, Expression right) {
+        return new Multiplication(left, right).evaluate();
     }
     
     private Constant getReal(Object object) {
