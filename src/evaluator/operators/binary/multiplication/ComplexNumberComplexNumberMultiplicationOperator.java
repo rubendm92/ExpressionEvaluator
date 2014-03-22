@@ -15,11 +15,21 @@ public class ComplexNumberComplexNumberMultiplicationOperator implements BinaryO
     }
 
     private Object subtractRealPart(Object left, Object right) {
-        return new Subtraction(new Constant(new Multiplication(getReal(left), getReal(right)).evaluate()), new Constant(new Multiplication(getImaginary(left), getImaginary(right)).evaluate())).evaluate();
+        return new Subtraction(constant(multiply(getReal(left), getReal(right))),
+                constant(multiply(getImaginary(left), getImaginary(right)))).evaluate();
+    }
+
+    private Object addImaginaryPart(Object left, Object right) {
+        return new Addition(constant(multiply(getReal(left), getImaginary(right))),
+                constant(multiply(getImaginary(left), getReal(right)))).evaluate();
     }
     
-    private Object addImaginaryPart(Object left, Object right) {
-        return new Addition(new Constant(new Multiplication(getReal(left), getImaginary(right)).evaluate()), new Constant(new Multiplication(getImaginary(left), getReal(right)).evaluate())).evaluate();
+    private Constant constant(Object object) {
+        return new Constant(object);
+    }
+    
+    private Object multiply(Constant left, Constant right) {
+        return new Multiplication(left, right).evaluate();
     }
     
     private Constant getReal(Object object) {
