@@ -17,6 +17,8 @@ public class MultiplicationTests {
     
     @Test
     public void testMultiplicationComplex() {
+        assertEquals(new ComplexNumber(6, -3), new Multiplication(new Constant(3), new Constant(new ComplexNumber(2, -1))).evaluate());
+        assertEquals(new ComplexNumber(6, -3), new Multiplication(new Constant(new ComplexNumber(2, -1)), new Constant(3)).evaluate());
         assertEquals(new ComplexNumber(14, -2), new Multiplication(new Constant(new ComplexNumber(6, 2)), new Constant(new ComplexNumber(2, -1))).evaluate());
     }
 }
