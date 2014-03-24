@@ -1,55 +1,68 @@
 package validator.numeric;
 
+import java.util.ArrayList;
 import validator.ExpressionValidator;
 import validator.InvalidExpressionException;
 
 public class NumericExpressionValidator implements ExpressionValidator {
 
-    private final String numberRegex = "([0-9]+|[0-9]+\\.[0-9]+)+";
-    private final String operatorsRegex = "(\\+|\\-|\\*|\\/)+";
-    private final String openParenthesisRegex = "[\\(]*";
-    private final String closeParenthesisRegex = "[\\)]*";
+    private ArrayList<Character> numbers;
+    private ArrayList<Character> operators;
+    
+    private boolean lastCharacterWasNumber = false;
+    private int parenthesis;
+
+    public NumericExpressionValidator() {
+        this.parenthesis = 0;
+        initOperators();
+        initNumbers();
+    }
+
+    private void initNumbers() {
+        this.numbers = new ArrayList<>();
+        for (int i = 0; i < 10; i++)
+            numbers.add(Character.forDigit(i, 10));
+    }
+
+    private void initOperators() {
+        this.operators = new ArrayList<>();
+        this.operators.add('+');
+        this.operators.add('-');
+        this.operators.add('*');
+        this.operators.add('/');
+    }
     
     @Override
     public void check(String expression) {
-        String expressionWithoutSpaces = expression.replace(" ", "");
-        if (!checkParenthesis(expressionWithoutSpaces)) throw new InvalidExpressionException();
-        if (expressionWithoutSpaces.matches(regularExpression())) return;
-        throw new InvalidExpressionException();
-    }
-    
-    private boolean checkParenthesis(String expression) {
-        return countCharacter(expression, (char character) -> (character == '(')) == countCharacter(expression, (char character) -> (character == ')'));
-    }
-    
-    private String regularExpression() {
-        return expressionOperationBeforeParenthesis() + expressionWithParenthesis() + expressionOperationAfterParenthesis();
-    }
-    
-    private String expressionOperationBeforeParenthesis() {
-        return "[" + expressionWithParenthesis() + operatorsRegex + "]*";
-    }
-    
-    private String expressionOperationAfterParenthesis() {
-        return "[" + operatorsRegex + expressionWithParenthesis() + "]*";
-    }
-
-    private String expressionWithParenthesis() {
-        return openParenthesisRegex + simpleRegularExpression() + closeParenthesisRegex;
-    }
-    
-    private String simpleRegularExpression() {
-        return numberRegex + operatorsRegex + numberRegex;
+        char[] expressionWithoutSpaces = expression.replace(" ", "").toCharArray();
+        for (char character : expressionWithoutSpaces) {
+            if (isNumber(character) || character == '.') {
+                lastCharacterWasNumber = true;
+                continue;
+            }
+            if (isOperator(character) && lastCharacterWasNumber) {
+                lastCharacterWasNumber = false;
+                continue;
+            }
+            if (character == '(') {
+                parenthesis++;
+                continue;
+            }
+            if (character == ')' && lastCharacterWasNumber) {
+                parenthesis--;
+                continue;
+            }
+            throw  new InvalidExpressionException();
+        }
+        if (!(lastCharacterWasNumber && (parenthesis == 0))) throw  new InvalidExpressionException();
     }
 
-    private int countCharacter(String expression, Function function) {
-        int characterCount = 0;
-        for (char character : expression.toCharArray())
-            if (function.apply(character)) characterCount++;
-        return characterCount;
+    private boolean isNumber(char character) {
+        return numbers.contains(character);
     }
     
-    private interface Function {
-        public boolean apply(char character);
+    private boolean isOperator(char character) {
+        return operators.contains(character);
     }
+    
 }
