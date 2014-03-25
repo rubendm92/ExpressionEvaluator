@@ -74,6 +74,11 @@ public class ValidateExpressionsWithoutParenthesisTests {
     public void testInvalidExpressionTooManyPointsAtTheEnd() {
         testShouldFail("2 + 3.2.3");
     }
+    
+    @Test
+    public void testInvalidExpressionWithTwoOperandsTogether() {
+        testShouldFail("2++2");
+    }
         
     public void testShouldPass(String expression) {
         try {

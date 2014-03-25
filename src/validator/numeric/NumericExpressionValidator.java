@@ -15,6 +15,7 @@ public class NumericExpressionValidator implements ExpressionValidator {
     public NumericExpressionValidator() {
         this.functions = new HashMap<>();
         initOperators();
+        initPoint();
         initNumbers();
         initParenthesis();
     }
@@ -24,23 +25,22 @@ public class NumericExpressionValidator implements ExpressionValidator {
         functions.put('-', processOperator());
         functions.put('*', processOperator());
         functions.put('/', processOperator());
-        functions.put('.', new Function() {
-
-            @Override
-            public void apply() {
-                if (++points > 1) throw new InvalidExpressionException();
-                if (lastCharacterWasNumber) lastCharacterWasNumber = false;
-            }
-        });
+        
     }
 
     private Function processOperator() {
         return (Function) () -> {
-            if (lastCharacterWasNumber) {
-                lastCharacterWasNumber = false;
-                if (points != 0) points--;
-            }
+            if (!lastCharacterWasNumber) throw new InvalidExpressionException();
+            lastCharacterWasNumber = false;
+            if (points != 0) points--;
         };
+    }
+    
+    private void initPoint() {
+        functions.put('.', (Function) () -> {
+            if (++points > 1) throw new InvalidExpressionException();
+            if (lastCharacterWasNumber) lastCharacterWasNumber = false;
+        });
     }
     
     private void initNumbers() {
@@ -51,6 +51,7 @@ public class NumericExpressionValidator implements ExpressionValidator {
     private void initParenthesis() {
         functions.put('(', (Function) () -> parenthesis++);
         functions.put(')', (Function) () -> {
+            if (parenthesis == 0) throw new InvalidExpressionException();
             if (lastCharacterWasNumber) parenthesis--;
         });
     }
@@ -58,8 +59,7 @@ public class NumericExpressionValidator implements ExpressionValidator {
     @Override
     public void check(String expression) {
         init();
-        char[] expressionWithoutSpaces = expression.replace(" ", "").toCharArray();
-        for (char character : expressionWithoutSpaces)
+        for (char character : expressionWithoutSpaces(expression).toCharArray())
             checkCharacter(character);
         if (!lastCharacterIsValid())
             throw new InvalidExpressionException();
@@ -69,6 +69,10 @@ public class NumericExpressionValidator implements ExpressionValidator {
         lastCharacterWasNumber = false;
         parenthesis = 0;
         points = 0;
+    }
+    
+    private String expressionWithoutSpaces(String expression) {
+        return expression.replace(" ", "");
     }
 
     private void checkCharacter(char character) throws InvalidExpressionException {

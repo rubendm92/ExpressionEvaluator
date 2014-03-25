@@ -50,6 +50,11 @@ public class ValidateExpressionsWithParenthesis {
         testShouldFail("(2.2+2.2.3)");
     }
     
+    @Test
+    public void testInvalidExpressionWithParenthesisBadPlaced() {
+        testShouldFail("2)+4(");
+    }
+    
     public void testShouldPass(String expression) {
         try {
             validator.check(expression);
