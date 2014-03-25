@@ -21,26 +21,26 @@ public class NumericExpressionValidator implements ExpressionValidator {
     }
 
     private void initOperators() {
-        functions.put('+', processOperator());
-        functions.put('-', processOperator());
-        functions.put('*', processOperator());
-        functions.put('/', processOperator());
+        functions.put('+', (Function) () -> processOperator());
+        functions.put('-', (Function) () -> processOperator());
+        functions.put('*', (Function) () -> processOperator());
+        functions.put('/', (Function) () -> processOperator());
         
     }
 
-    private Function processOperator() {
-        return (Function) () -> {
-            if (!lastCharacterWasNumber) throw new InvalidExpressionException();
-            lastCharacterWasNumber = false;
-            if (points != 0) points--;
-        };
+    private void processOperator() throws InvalidExpressionException {
+        if (!lastCharacterWasNumber) throw new InvalidExpressionException();
+        lastCharacterWasNumber = false;
+        if (points != 0) points--;
     }
     
     private void initPoint() {
-        functions.put('.', (Function) () -> {
-            if (++points > 1) throw new InvalidExpressionException();
-            if (lastCharacterWasNumber) lastCharacterWasNumber = false;
-        });
+        functions.put('.', (Function) () -> processPoint());
+    }
+
+    private void processPoint() throws InvalidExpressionException {
+        if (++points > 1) throw new InvalidExpressionException();
+        if (lastCharacterWasNumber) lastCharacterWasNumber = false;
     }
     
     private void initNumbers() {
@@ -50,10 +50,12 @@ public class NumericExpressionValidator implements ExpressionValidator {
 
     private void initParenthesis() {
         functions.put('(', (Function) () -> parenthesis++);
-        functions.put(')', (Function) () -> {
-            if (parenthesis == 0) throw new InvalidExpressionException();
-            if (lastCharacterWasNumber) parenthesis--;
-        });
+        functions.put(')', (Function) () -> processCloseParenthesis());
+    }
+
+    private void processCloseParenthesis() throws InvalidExpressionException {
+        if (parenthesis == 0) throw new InvalidExpressionException();
+        if (lastCharacterWasNumber) parenthesis--;
     }
     
     @Override
@@ -61,8 +63,7 @@ public class NumericExpressionValidator implements ExpressionValidator {
         init();
         for (char character : expressionWithoutSpaces(expression).toCharArray())
             checkCharacter(character);
-        if (!lastCharacterIsValid())
-            throw new InvalidExpressionException();
+        if (!lastCharacterIsValid()) throw new InvalidExpressionException();
     }
 
     private void init() {
@@ -75,7 +76,7 @@ public class NumericExpressionValidator implements ExpressionValidator {
         return expression.replace(" ", "");
     }
 
-    private void checkCharacter(char character) throws InvalidExpressionException {
+    private void checkCharacter(char character) {
         if (!isValidCharacter(character)) throw new InvalidExpressionException();
         functions.get(character).apply();
     }
@@ -90,7 +91,6 @@ public class NumericExpressionValidator implements ExpressionValidator {
     }
 
     private interface Function {
-
         public void apply();
     }
 }
