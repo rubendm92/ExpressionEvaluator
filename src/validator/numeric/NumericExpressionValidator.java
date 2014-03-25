@@ -9,7 +9,7 @@ public class NumericExpressionValidator implements ExpressionValidator {
     private final HashMap<Character, Function> functions;
 
     private boolean lastCharacterWasNumber;
-    private int point;
+    private int points;
     private int parenthesis;
 
     public NumericExpressionValidator() {
@@ -28,7 +28,7 @@ public class NumericExpressionValidator implements ExpressionValidator {
 
             @Override
             public void apply() {
-                if (++point > 1) throw new InvalidExpressionException();
+                if (++points > 1) throw new InvalidExpressionException();
                 if (lastCharacterWasNumber) lastCharacterWasNumber = false;
             }
         });
@@ -38,7 +38,7 @@ public class NumericExpressionValidator implements ExpressionValidator {
         return (Function) () -> {
             if (lastCharacterWasNumber) {
                 lastCharacterWasNumber = false;
-                if (point != 0) point--;
+                if (points != 0) points--;
             }
         };
     }
@@ -68,7 +68,7 @@ public class NumericExpressionValidator implements ExpressionValidator {
     private void init() {
         lastCharacterWasNumber = false;
         parenthesis = 0;
-        point = 0;
+        points = 0;
     }
 
     private void checkCharacter(char character) throws InvalidExpressionException {
@@ -82,7 +82,7 @@ public class NumericExpressionValidator implements ExpressionValidator {
     }
 
     private boolean lastCharacterIsValid() {
-        return (lastCharacterWasNumber && (parenthesis == 0));
+        return (lastCharacterWasNumber && (parenthesis == 0) && points < 2);
     }
 
     private interface Function {

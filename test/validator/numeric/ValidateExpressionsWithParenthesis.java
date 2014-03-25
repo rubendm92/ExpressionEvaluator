@@ -45,6 +45,11 @@ public class ValidateExpressionsWithParenthesis {
         testShouldFail("(2.2+2)+(3+)");
     }
     
+    @Test
+    public void testInvalidExpressionWithTooManyPointsBeforeCloseParenthesis() {
+        testShouldFail("(2.2+2.2.3)");
+    }
+    
     public void testShouldPass(String expression) {
         try {
             validator.check(expression);

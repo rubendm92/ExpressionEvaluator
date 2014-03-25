@@ -70,6 +70,10 @@ public class ValidateExpressionsWithoutParenthesisTests {
         testShouldFail("2.2.3 + 3");
     }
     
+    @Test
+    public void testInvalidExpressionTooManyPointsAtTheEnd() {
+        testShouldFail("2 + 3.2.3");
+    }
         
     public void testShouldPass(String expression) {
         try {
