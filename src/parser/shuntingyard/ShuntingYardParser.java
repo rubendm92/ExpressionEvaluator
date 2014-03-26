@@ -26,7 +26,7 @@ public class ShuntingYardParser implements Parser {
     }
     
     private void addHandlers() {
-        handlers.put(Constant.class, (Handler) (Token token) -> parseConstant(token));
+        handlers.put(Constant.class, (Handler) (token) -> parseConstant(token));
         handlers.put(Operator.class, (Handler) (token) -> parseOperator((Operator) token));
         handlers.put(Bracket.Open.class, (Handler) (token) -> symbols.push((Bracket) token));
         handlers.put(Bracket.Close.class, (Handler) (token) -> buildContentInsideBracket());
