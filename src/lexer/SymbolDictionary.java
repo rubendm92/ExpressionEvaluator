@@ -2,7 +2,7 @@ package lexer;
 
 import java.util.HashMap;
 import parser.token.Operator;
-import parser.token.Parenthesis;
+import parser.token.Bracket;
 import parser.token.Symbol;
 
 public class SymbolDictionary {
@@ -27,7 +27,7 @@ public class SymbolDictionary {
         dictionary.put('-', Operator.SUBTRACT);
         dictionary.put('*', Operator.MULTIPLY);
         dictionary.put('/', Operator.DIVIDE);
-        dictionary.put('(', Parenthesis.OPEN);
-        dictionary.put(')', Parenthesis.CLOSE);
+        dictionary.put('(', Bracket.OPEN);
+        dictionary.put(')', Bracket.CLOSE);
     }
 }

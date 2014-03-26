@@ -7,9 +7,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import parser.shuntingyard.ShuntingYardParser;
 import parser.shuntingyard.SimpleParserTreeBuildingStrategy;
+import parser.token.Bracket;
 import parser.token.Constant;
 import parser.token.Operator;
-import parser.token.Parenthesis;
 import parser.token.Token;
 
 public class ParserTests {
@@ -70,14 +70,14 @@ public class ParserTests {
     }
     
     @Test
-    public void testOperationWithParenthesis() {
+    public void testOperationWithBrackets() {
         ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
         Token[] tokens = {
-            Parenthesis.OPEN,
+            Bracket.OPEN,
             new Constant(2),
             Operator.ADD,
             new Constant(2),
-            Parenthesis.CLOSE,
+            Bracket.CLOSE,
             Operator.MULTIPLY,
             new Constant(2)
         };
@@ -85,16 +85,16 @@ public class ParserTests {
     }
     
     @Test
-    public void testAnotherOperationWithParenthesis() {
+    public void testAnotherOperationWithBrackets() {
         ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
         Token[] tokens = {
             new Constant(3),
             Operator.MULTIPLY,
-            Parenthesis.OPEN,
+            Bracket.OPEN,
             new Constant(2),
             Operator.ADD,
             new Constant(2),
-            Parenthesis.CLOSE
+            Bracket.CLOSE
         };
         assertEquals(12, parser.parse(tokens).evaluate());
     }

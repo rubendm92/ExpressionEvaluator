@@ -48,7 +48,7 @@ public class LexerTests {
     }
     
     @Test
-    public void testAnalyzeExpressionWithParenthesis() {
+    public void testAnalyzeExpressionWithBrackets() {
         ArrayList<Token> tokens = lexer.analyze("(4 - 2) * 2");
         ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
         assertEquals(4, parser.parse(tokens.toArray(new Token[]{})).evaluate());

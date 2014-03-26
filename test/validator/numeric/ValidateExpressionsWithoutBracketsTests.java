@@ -6,7 +6,7 @@ import org.junit.Test;
 import validator.ExpressionValidator;
 import validator.InvalidExpressionException;
 
-public class ValidateExpressionsWithoutParenthesisTests {
+public class ValidateExpressionsWithoutBracketsTests {
     
     private static ExpressionValidator validator;
     

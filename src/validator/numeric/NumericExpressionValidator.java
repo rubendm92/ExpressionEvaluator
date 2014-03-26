@@ -10,14 +10,14 @@ public class NumericExpressionValidator implements ExpressionValidator {
 
     private boolean lastCharacterWasNumber;
     private int points;
-    private int parenthesis;
+    private int brackets;
 
     public NumericExpressionValidator() {
         this.functions = new HashMap<>();
         initOperators();
         initPoint();
         initNumbers();
-        initParenthesis();
+        initBrackets();
     }
 
     private void initOperators() {
@@ -48,14 +48,14 @@ public class NumericExpressionValidator implements ExpressionValidator {
             functions.put(Character.forDigit(i, 10), (Function) () -> lastCharacterWasNumber = true);
     }
 
-    private void initParenthesis() {
-        functions.put('(', (Function) () -> parenthesis++);
-        functions.put(')', (Function) () -> processCloseParenthesis());
+    private void initBrackets() {
+        functions.put('(', (Function) () -> brackets++);
+        functions.put(')', (Function) () -> processCloseBrackets());
     }
 
-    private void processCloseParenthesis() throws InvalidExpressionException {
-        if (parenthesis == 0) throw new InvalidExpressionException();
-        if (lastCharacterWasNumber) parenthesis--;
+    private void processCloseBrackets() throws InvalidExpressionException {
+        if (brackets == 0) throw new InvalidExpressionException();
+        if (lastCharacterWasNumber) brackets--;
     }
     
     @Override
@@ -68,7 +68,7 @@ public class NumericExpressionValidator implements ExpressionValidator {
 
     private void init() {
         lastCharacterWasNumber = false;
-        parenthesis = 0;
+        brackets = 0;
         points = 0;
     }
     
@@ -87,7 +87,7 @@ public class NumericExpressionValidator implements ExpressionValidator {
     }
 
     private boolean lastCharacterIsValid() {
-        return (lastCharacterWasNumber && (parenthesis == 0) && points < 2);
+        return (lastCharacterWasNumber && (brackets == 0) && points < 2);
     }
 
     private interface Function {
