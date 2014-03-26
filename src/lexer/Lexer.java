@@ -3,18 +3,22 @@ package lexer;
 import java.util.ArrayList;
 import parser.token.Constant;
 import parser.token.Token;
+import validator.ExpressionValidator;
 
 public class Lexer {
     
     private final SymbolDictionary dictionary;
+    private final ExpressionValidator validator;
     private ArrayList<Token> tokens;
     private String currentNumber;
 
-    public Lexer() {
+    public Lexer(ExpressionValidator validator) {
         this.dictionary = new SymbolDictionary();
+        this.validator = validator;
     }
     
     public ArrayList<Token> analyze(String expression) {
+        validator.check(expression);
         tokens = new ArrayList<>();
         currentNumber = "";
         processString(formatExpression(expression));
