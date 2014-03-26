@@ -20,21 +20,21 @@ public class Lexer {
     
     public ArrayList<Token> analyze(String expression) {
         validator.check(expression);
-        tokens = new ArrayList<>();
         currentNumber = "";
         lastCharacterWasOperator = true;
-        processString(formatExpression(expression));
-        return tokens;
+        return processString(formatExpression(expression));
     }
     
     private char[] formatExpression(String expression) {
         return expression.replace(" ", "").toCharArray();
     }
 
-    private void processString(char[] expression) {
+    private ArrayList<Token> processString(char[] expression) {
+        tokens = new ArrayList<>();
         for (char character : expression)
             processCharacter(character);
         processNumber();
+        return tokens;
     }
 
     private void processCharacter(char character) {
@@ -45,19 +45,23 @@ public class Lexer {
     }
 
     private void processSymbol(char character) {
-        if (dictionary.isOperator(character)) {
-            if (lastCharacterWasOperator && "".equals(currentNumber)) {
-                currentNumber += character;
-                lastCharacterWasOperator = false;
-            } else {
-                processNumber();
-                lastCharacterWasOperator = true;
-                tokens.add(dictionary.getSymbol(character));
-            }
-        } else {
-            processNumber();
-            tokens.add(dictionary.getSymbol(character));
-        }
+        if (dictionary.isOperator(character))
+            processOperator(character);
+        else
+            processNumberAndSymbol(character);
+    }
+
+    private void processOperator(char character) {
+        if (lastCharacterWasOperator && "".equals(currentNumber))
+            currentNumber += character;
+        else
+            processNumberAndSymbol(character);
+        lastCharacterWasOperator = !lastCharacterWasOperator;
+    }
+    
+    private void processNumberAndSymbol(char character) {
+        processNumber();
+        tokens.add(dictionary.getSymbol(character));
     }
     
     private void processNumber() {
