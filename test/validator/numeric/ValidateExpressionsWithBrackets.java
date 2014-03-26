@@ -1,12 +1,12 @@
 package validator.numeric;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import validator.ExpressionValidator;
 import validator.InvalidExpressionException;
 
-public class ValidateExpressionsWithParenthesis {
+public class ValidateExpressionsWithBrackets {
     
     private static ExpressionValidator validator;
     
@@ -16,33 +16,48 @@ public class ValidateExpressionsWithParenthesis {
     }
     
     @Test
-    public void testValidExpressionWithParenthesis() {
+    public void testValidExpressionWithBrackets() {
         testShouldPass("(2.2+2.3)");
     }
     
     @Test
-    public void testValidExpressionWithOperationAfterParenthesis() {
+    public void testValidExpressionWithOperationAfterBrackets() {
         testShouldPass("(2.2+2.3)*3");
     }
     
     @Test
-    public void testValidExpressionWithOperationBeforeParenthesis() {
+    public void testValidExpressionWithOperationBeforeBrackets() {
         testShouldPass("3*(2.2+2.3)");
     }
     
     @Test
-    public void testValidExpressionWithTwoParenthesis() {
+    public void testValidExpressionWithTwoBrackets() {
         testShouldPass("(2.2+2.3)*(3-2)");
     }
     
     @Test
-    public void testInvalidExpressionWithParenthesis() {
+    public void testValidExpressionWithNegativeNumber() {
+        testShouldPass("(2.2+2.3)*-2");
+    }
+    
+    @Test
+    public void testInvalidExpressionWithBrackets() {
         testShouldFail("((2.2+2.3)");
     }
     
     @Test
-    public void testAnotherInvalidExpressionWithParenthesis() {
+    public void testAnotherInvalidExpressionWithBrackets() {
         testShouldFail("(2.2+2)+(3+)");
+    }
+    
+    @Test
+    public void testInvalidExpressionWithTooManyPointsBeforeCloseBrackets() {
+        testShouldFail("(2.2+2.2.3)");
+    }
+    
+    @Test
+    public void testInvalidExpressionWithBracketsBadPlaced() {
+        testShouldFail("2)+4(");
     }
     
     public void testShouldPass(String expression) {

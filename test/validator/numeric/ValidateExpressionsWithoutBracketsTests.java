@@ -1,12 +1,12 @@
 package validator.numeric;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import validator.ExpressionValidator;
 import validator.InvalidExpressionException;
 
-public class ValidateExpressionsWithoutParenthesisTests {
+public class ValidateExpressionsWithoutBracketsTests {
     
     private static ExpressionValidator validator;
     
@@ -56,6 +56,11 @@ public class ValidateExpressionsWithoutParenthesisTests {
     }
     
     @Test
+    public void testValidExpressionWithNegativeNumber() {
+        testShouldPass("-2 * 3");
+    }
+    
+    @Test
     public void testInvalidExpression() {
         testShouldFail("2.2b/2.3");
     }
@@ -65,6 +70,20 @@ public class ValidateExpressionsWithoutParenthesisTests {
         testShouldPass("2.2 * 2.3 + 3");
     }
     
+    @Test
+    public void testInvalidExpressionTooManyPoints() {
+        testShouldFail("2.2.3 + 3");
+    }
+    
+    @Test
+    public void testInvalidExpressionTooManyPointsAtTheEnd() {
+        testShouldFail("2 + 3.2.3");
+    }
+    
+    @Test
+    public void testInvalidExpressionWithTwoOperandsTogether() {
+        testShouldFail("2+*2");
+    }
         
     public void testShouldPass(String expression) {
         try {

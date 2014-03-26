@@ -1,33 +1,47 @@
 package lexer;
 
 import java.util.HashMap;
+import parser.token.Bracket;
 import parser.token.Operator;
-import parser.token.Parenthesis;
 import parser.token.Symbol;
 
 public class SymbolDictionary {
     
-    private final HashMap<Character, Symbol> dictionary;
+    private final HashMap<Character, Operator> operators;
+    private final HashMap<Character, Bracket> brackets;
     
     public SymbolDictionary() {
-        this.dictionary = new HashMap<>();
+        this.operators = new HashMap<>();
         addOperators();
+        this.brackets = new HashMap<>();
+        addBrackets();
     }
     
-    public Symbol getSymbol(char operator) {
-        return dictionary.get(operator);
+    public Symbol getSymbol(char symbol) {
+        return (operators.get(symbol) == null) ? brackets.get(symbol) : operators.get(symbol);
     }
     
     public boolean isSymbol(char operator) {
         return getSymbol(operator) != null;
     }
+    
+    public boolean isOperator(char operator) {
+         return operators.get(operator) != null;
+    }
+    
+    public boolean isBracket(char bracket) {
+         return brackets.get(bracket) != null;
+    }
 
     private void addOperators() {
-        dictionary.put('+', Operator.ADD);
-        dictionary.put('-', Operator.SUBTRACT);
-        dictionary.put('*', Operator.MULTIPLY);
-        dictionary.put('/', Operator.DIVIDE);
-        dictionary.put('(', Parenthesis.OPEN);
-        dictionary.put(')', Parenthesis.CLOSE);
+        operators.put('+', Operator.ADD);
+        operators.put('-', Operator.SUBTRACT);
+        operators.put('*', Operator.MULTIPLY);
+        operators.put('/', Operator.DIVIDE);
+    }
+
+    private void addBrackets() {
+        brackets.put('(', Bracket.OPEN);
+        brackets.put(')', Bracket.CLOSE);
     }
 }

@@ -20,22 +20,19 @@ public class SimpleParserTreeBuildingStrategy implements ParserTreeBuildingStrat
 
     @Override
     public void build(Token token) {
-        if (token instanceof parser.token.Constant)
-            expressions.add(buildConstant((parser.token.Constant) token));
-        else
-            expressions.add(buildOperation((Symbol) token));
-    }
-    
-    private Constant buildConstant(parser.token.Constant token) {
-        return factory.buildConstant(token);
+        if (token instanceof Symbol) expressions.add(buildOperation((Symbol) token));
+        else expressions.add(buildConstant((parser.token.Constant) token));
     }
     
     private Expression buildOperation(Symbol symbol) {
         Expression right = expressions.pop();
-        Expression left = expressions.pop();
-        return factory.buildOperation(symbol, left, right);
+        return factory.buildOperation(symbol, expressions.pop(), right);
     }
 
+    private Constant buildConstant(parser.token.Constant token) {
+        return factory.buildConstant(token);
+    }
+    
     @Override
     public Expression getExpression() {
         return expressions.pop();
