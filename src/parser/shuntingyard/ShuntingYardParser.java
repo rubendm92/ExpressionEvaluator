@@ -73,10 +73,8 @@ public class ShuntingYardParser implements Parser {
     }
     
     private Expression getExpression() {
-        while (!symbols.empty()) {
-            if (symbols.peek() instanceof Parenthesis) symbols.pop();
-            else strategy.build(symbols.pop());
-        }
+        while (!symbols.empty())
+            strategy.build(symbols.pop());
         return strategy.getExpression();
     }
 }
