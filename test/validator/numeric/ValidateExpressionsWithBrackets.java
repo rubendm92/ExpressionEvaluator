@@ -36,6 +36,11 @@ public class ValidateExpressionsWithBrackets {
     }
     
     @Test
+    public void testValidExpressionWithNegativeNumber() {
+        testShouldPass("(2.2+2.3)*-2");
+    }
+    
+    @Test
     public void testInvalidExpressionWithBrackets() {
         testShouldFail("((2.2+2.3)");
     }

@@ -56,6 +56,11 @@ public class ValidateExpressionsWithoutBracketsTests {
     }
     
     @Test
+    public void testValidExpressionWithNegativeNumber() {
+        testShouldPass("-2 * 3");
+    }
+    
+    @Test
     public void testInvalidExpression() {
         testShouldFail("2.2b/2.3");
     }
@@ -77,7 +82,7 @@ public class ValidateExpressionsWithoutBracketsTests {
     
     @Test
     public void testInvalidExpressionWithTwoOperandsTogether() {
-        testShouldFail("2++2");
+        testShouldFail("2+*2");
     }
         
     public void testShouldPass(String expression) {

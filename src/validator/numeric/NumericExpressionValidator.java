@@ -21,15 +21,16 @@ public class NumericExpressionValidator implements ExpressionValidator {
     }
 
     private void initOperators() {
-        functions.put('+', (Function) () -> processOperator());
-        functions.put('-', (Function) () -> processOperator());
-        functions.put('*', (Function) () -> processOperator());
-        functions.put('/', (Function) () -> processOperator());
+        functions.put('+', (Function) () -> processOperator('+'));
+        functions.put('-', (Function) () -> processOperator('-'));
+        functions.put('*', (Function) () -> processOperator('*'));
+        functions.put('/', (Function) () -> processOperator('/'));
         
     }
 
-    private void processOperator() throws InvalidExpressionException {
-        if (!lastCharacterWasNumber) throw new InvalidExpressionException();
+    private void processOperator(char character) throws InvalidExpressionException {
+        if (!lastCharacterWasNumber)
+            if (character != '-') throw new InvalidExpressionException();
         lastCharacterWasNumber = false;
         if (points != 0) points--;
     }
