@@ -54,10 +54,10 @@ public class ShuntingYardParser implements Parser {
 
     private void buildContentInsideParenthesis() {
         while (true) {
-            Symbol symbol = symbols.pop();
-            if (symbol == Parenthesis.OPEN) return;
-            strategy.build(symbol);
+            if (symbols.peek() == Parenthesis.OPEN) break;
+            strategy.build(symbols.pop());
         }
+        symbols.pop();
     }
     
     private void parseOperator(Operator operator) {
@@ -74,9 +74,8 @@ public class ShuntingYardParser implements Parser {
     
     private Expression getExpression() {
         while (!symbols.empty()) {
-            Symbol symbol = symbols.pop();
-            if (symbol instanceof Parenthesis) continue;
-            strategy.build(symbol);
+            if (symbols.peek() instanceof Parenthesis) symbols.pop();
+            else strategy.build(symbols.pop());
         }
         return strategy.getExpression();
     }
