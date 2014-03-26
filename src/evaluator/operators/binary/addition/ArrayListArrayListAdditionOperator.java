@@ -15,7 +15,7 @@ public class ArrayListArrayListAdditionOperator implements BinaryOperator{
     private Object sumLists(ArrayList left, ArrayList right) {
         ArrayList<Object> result = new ArrayList<>();
         for (int i = 0; i < left.size(); i++)
-            result.add(new Addition(new Constant(right.get(i)), new Constant(left.get(i))).evaluate());
+            result.add(new Addition(new Constant(left.get(i)), new Constant(right.get(i))).evaluate());
         return result;
     }
 }
