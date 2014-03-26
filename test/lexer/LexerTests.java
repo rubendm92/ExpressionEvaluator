@@ -53,4 +53,11 @@ public class LexerTests {
         ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
         assertEquals(4, parser.parse(tokens.toArray(new Token[]{})).evaluate());
     }
+    
+    @Test
+    public void testAnalyzeExpressionWithNegativeNumber() {
+        ArrayList<Token> tokens = lexer.analyze("(-2) * 2");
+        ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
+        assertEquals(-4, parser.parse(tokens.toArray(new Token[]{})).evaluate());
+    }
 }

@@ -11,6 +11,7 @@ public class Lexer {
     private final ExpressionValidator validator;
     private ArrayList<Token> tokens;
     private String currentNumber;
+    private boolean lastCharacterWasOperator;
 
     public Lexer(ExpressionValidator validator) {
         this.dictionary = new SymbolDictionary();
@@ -21,6 +22,7 @@ public class Lexer {
         validator.check(expression);
         tokens = new ArrayList<>();
         currentNumber = "";
+        lastCharacterWasOperator = true;
         processString(formatExpression(expression));
         return tokens;
     }
@@ -43,8 +45,19 @@ public class Lexer {
     }
 
     private void processSymbol(char character) {
-        processNumber();
-        tokens.add(dictionary.getSymbol(character));
+        if (dictionary.isOperator(character)) {
+            if (lastCharacterWasOperator && "".equals(currentNumber)) {
+                currentNumber += character;
+                lastCharacterWasOperator = false;
+            } else {
+                processNumber();
+                lastCharacterWasOperator = true;
+                tokens.add(dictionary.getSymbol(character));
+            }
+        } else {
+            processNumber();
+            tokens.add(dictionary.getSymbol(character));
+        }
     }
     
     private void processNumber() {
@@ -52,5 +65,6 @@ public class Lexer {
         if (currentNumber.contains(".")) tokens.add(new Constant(Double.valueOf(currentNumber)));
         else tokens.add(new Constant(Integer.valueOf(currentNumber)));
         currentNumber = "";
+        lastCharacterWasOperator = false;
     }
 }
