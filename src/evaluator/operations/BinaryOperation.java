@@ -1,4 +1,4 @@
-package evaluator.operations.binary;
+package evaluator.operations;
 
 import evaluator.Expression;
 import evaluator.operators.binary.BinaryOperatorFactory;

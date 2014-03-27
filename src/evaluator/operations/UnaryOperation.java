@@ -1,4 +1,4 @@
-package evaluator.operations.unary;
+package evaluator.operations;
 
 import evaluator.Expression;
 import evaluator.operators.unary.UnaryOperatorFactory;
