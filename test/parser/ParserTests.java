@@ -31,7 +31,7 @@ public class ParserTests {
     
     @Test
     public void testTwoOperandsExpression() {
-        ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
+        ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy(new ExpressionFactoryImpl()));
         Token[] tokens = {
             new Constant(1),
             Operator.ADD,
@@ -44,7 +44,7 @@ public class ParserTests {
     
     @Test
     public void testTwoOperandsExpressionWithPrecedence() {
-        ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
+        ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy(new ExpressionFactoryImpl()));
         Token[] tokens = {
             new Constant(2),
             Operator.ADD,
@@ -57,7 +57,7 @@ public class ParserTests {
     
     @Test
     public void testAdditionAndSubtraction() {
-        ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
+        ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy(new ExpressionFactoryImpl()));
         Token[] tokens = {
             new Constant(3),
             Operator.SUBTRACT,
@@ -71,7 +71,7 @@ public class ParserTests {
     
     @Test
     public void testOperationWithBrackets() {
-        ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
+        ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy(new ExpressionFactoryImpl()));
         Token[] tokens = {
             Bracket.OPEN,
             new Constant(2),
@@ -86,7 +86,7 @@ public class ParserTests {
     
     @Test
     public void testAnotherOperationWithBrackets() {
-        ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
+        ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy(new ExpressionFactoryImpl()));
         Token[] tokens = {
             new Constant(3),
             Operator.MULTIPLY,
@@ -101,7 +101,7 @@ public class ParserTests {
     
     @Test
     public void testExpressionWithThreeOperators() {
-        ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy());
+        ShuntingYardParser parser = new ShuntingYardParser(new SimpleParserTreeBuildingStrategy(new ExpressionFactoryImpl()));
         Token[] tokens = {
             new Constant(30),
             Operator.SUBTRACT,

@@ -13,9 +13,9 @@ public class SimpleParserTreeBuildingStrategy implements ParserTreeBuildingStrat
     private final Stack<Expression> expressions;
     private final ExpressionFactory factory;
 
-    public SimpleParserTreeBuildingStrategy() {
+    public SimpleParserTreeBuildingStrategy(ExpressionFactory factory) {
         this.expressions = new Stack<>();
-        this.factory = new ExpressionFactory();
+        this.factory = factory;
     }
 
     @Override
